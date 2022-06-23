@@ -5,11 +5,11 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager instance;
-    public CombatState currentState;
-
     
-    v
-
+    
+    
+    [SerializeField]private CombatState currentState;
+    
     public enum CombatState
     {
         SelectingAction,
