@@ -170,6 +170,7 @@ MonoBehaviour:
   currentState: 0
   action: 0
   actionIndex: 0
+  characterControllers: []
 --- !u!1 &45065677
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +359,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 77731898}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &77731904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77731899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  level: 0
+  health: 0
+  maxHealth: 0
+  mana: 0
+  maxMana: 0
+  staminaAmount: 0
+  readyToAttack: 0
+  info: {fileID: 0}
+  currentAddition:
+    additionName: 
+    animationList: []
 --- !u!1001 &79324143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1484,6 +1509,30 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &740703874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740703872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  level: 0
+  health: 0
+  maxHealth: 0
+  mana: 0
+  maxMana: 0
+  staminaAmount: 0
+  readyToAttack: 0
+  info: {fileID: 0}
+  currentAddition:
+    additionName: 
+    animationList: []
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,6 +2502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterDetailsContainer: {fileID: 112687631}
+  infoPrefab: {fileID: 0}
 --- !u!1001 &2062116824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2570,3 +2620,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2062116829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062116827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  level: 0
+  health: 0
+  maxHealth: 0
+  mana: 0
+  maxMana: 0
+  staminaAmount: 0
+  readyToAttack: 0
+  info: {fileID: 0}
+  currentAddition:
+    additionName: 
+    animationList: []
