@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
@@ -26,12 +27,7 @@ public class CharacterInfo : MonoBehaviour
   
   private int currentHP;
 
-
-  private void Start()
-  {
-    EndTurn();
-  }
-
+  
   public void InjectCharacterInfo(CharacterController character)
   {
     nameText.text = character.name;
@@ -61,12 +57,12 @@ public class CharacterInfo : MonoBehaviour
 
   public void BeginTurn()
   {
-    characterIcon.color = Color.white;
+    characterIcon.DOColor(active, .2f);
   }
   
   
   public void EndTurn()
   {
-    characterIcon.color = nonActive;
+    characterIcon.DOColor(nonActive, .2f);
   }
 }

@@ -28,6 +28,7 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log(character.name);
             CombatUIManager.instance.CreateCharacterInfo(character);
+            character.ReturnInfo().EndTurn();
             characterTurns.Enqueue(character);
         }
         
@@ -51,6 +52,10 @@ public class CombatManager : MonoBehaviour
                     SwitchAction(-1);
                 else if(Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchAction(1);
+
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                    NextTurn();
                 break;
             case CombatState.SelectingTarget:
                 break;
@@ -59,7 +64,24 @@ public class CombatManager : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-    
+
+
+    void NextTurn()
+    {
+        actionIndex = 0;
+        CombatUIManager.instance.MoveCircle(actionIndex);
+        //Requeue the character
+        characterTurns.Enqueue(currentCharacter);
+        //End the turn
+        currentCharacter.EndTurn();
+        //Get the next character
+        currentCharacter = characterTurns.Dequeue();
+        
+        currentCharacter.StartTurn();
+    }
+
+
+
     public void SwitchAction(float direction)
     {
         //TODO: Move to a modulo operator
@@ -92,6 +114,9 @@ public class CombatManager : MonoBehaviour
     }
 
 
+    
+    
+    
     private enum CombatState
         {
             SelectingAction,
@@ -105,5 +130,8 @@ public class CombatManager : MonoBehaviour
             Item,
             Flee,
         }
+    
+    
+    
 
 }

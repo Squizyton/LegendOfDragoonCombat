@@ -79,6 +79,10 @@ public class CharacterController : MonoBehaviour
         onHealthChanged?.Invoke();
     }
 
+    public CharacterInfo ReturnInfo()
+    {
+        return info;
+    }
 
     public void InjectInfo(CharacterInfo ui)
     {
@@ -89,5 +93,10 @@ public class CharacterController : MonoBehaviour
     public void StartTurn()
     {
         info.BeginTurn();
+    }
+    
+    public void EndTurn()
+    {
+        info.EndTurn();
     }
 }
