@@ -11,8 +11,8 @@ public class CombatManager : MonoBehaviour
     [SerializeField]private CombatState currentState;
     [SerializeField] private CombatAction action;
     [SerializeField] private int actionIndex;
-    private Queue<CharacterController> characterTurns;
-    
+    [SerializeField]private Queue<CharacterController> characterTurns;
+    [SerializeField]private CharacterController currentCharacter;
     [Title("Character Controllers")]
     [SerializeField] private List<CharacterController> characterControllers;
 
@@ -22,9 +22,24 @@ public class CombatManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        
-        foreach(var character in characterControllers)
+        characterTurns = new Queue<CharacterController>();
+
+        foreach (var character in characterControllers)
+        {
+            Debug.Log(character.name);
             CombatUIManager.instance.CreateCharacterInfo(character);
+            characterTurns.Enqueue(character);
+        }
+        
+        
+        currentCharacter = characterTurns.Dequeue();
+        OnNewTurn();
+    }
+
+    private void OnNewTurn()
+    {
+        currentCharacter.StartTurn();
+        currentState = CombatState.SelectingAction;
     }
 
     private void Update()
@@ -87,7 +102,6 @@ public class CombatManager : MonoBehaviour
         {
             Attack,
             Defend,
-            Special,
             Item,
             Flee,
         }
