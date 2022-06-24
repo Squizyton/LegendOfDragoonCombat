@@ -16,3 +16,12 @@ MonoBehaviour:
   playerName: Dart
   maxHP: 100
   maxMP: 0
+  baseDamage: 0
+  additions:
+  - additionName: Test Additon
+    animationList:
+    - animation: {fileID: 0}
+      animationSpeed: 0
+      spGain: 0
+  - additionName: 
+    animationList: []

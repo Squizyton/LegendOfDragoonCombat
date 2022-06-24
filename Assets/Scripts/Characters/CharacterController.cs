@@ -16,7 +16,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField]private bool readyToAttack;
     [SerializeField] private CharacterInfo info;
     
-    
+    [SerializeField]private Addition currentAddition;
+
     private Action onHealthChanged;
 
     public void Start()
