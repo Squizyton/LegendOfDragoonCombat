@@ -22,6 +22,7 @@ public class CombatUIManager : MonoBehaviour
     {
         var info = Instantiate(infoPrefab, characterDetailsContainer);
         info.InjectCharacterInfo(character);
+        character.InjectInfo(info);
     }
 
 
