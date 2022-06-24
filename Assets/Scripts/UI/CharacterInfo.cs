@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterInfo : MonoBehaviour
+public class CharacterInfo : MonoBehaviour 
 {
   [Title("Text Objects")] [SerializeField]
   private TextMeshProUGUI nameText;
@@ -20,6 +20,7 @@ public class CharacterInfo : MonoBehaviour
   [Title("Non text objects")] [SerializeField]
   private Image characterIcon;
 
+  [SerializeField] private Color active;
   [SerializeField] private Color nonActive;
   [SerializeField] private Slider spBar;
   
