@@ -86,4 +86,7 @@ public class CharacterController : MonoBehaviour
         onHealthChanged += () => info.UpdateHP(this);
     }
 
+    public void StartTurn()
+    {
+    }
 }

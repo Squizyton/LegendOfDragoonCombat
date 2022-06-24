@@ -32,6 +32,10 @@ public class CombatManager : MonoBehaviour
         switch (currentState)
         {
             case CombatState.SelectingAction:
+                if(Input.GetKeyDown(KeyCode.LeftArrow))
+                    SwitchAction(-1);
+                else if(Input.GetKeyDown(KeyCode.RightArrow))
+                    SwitchAction(1);
                 break;
             case CombatState.SelectingTarget:
                 break;
@@ -49,7 +53,7 @@ public class CombatManager : MonoBehaviour
             case > 0:
             {
                 actionIndex++;
-                if (actionIndex >= 5)
+                if (actionIndex > 3)
                 {
                     actionIndex = 0;
                 }
@@ -61,15 +65,14 @@ public class CombatManager : MonoBehaviour
                 actionIndex--;
                 if (actionIndex < 0)
                 {
-                    actionIndex = 4;
+                    actionIndex = 3;
                 }
-
                 break;
             }
         }
 
         action = (CombatAction)actionIndex;
-        
+        CombatUIManager.instance.MoveCircle(actionIndex);
         //Move the cursor to the selected action
     }
 

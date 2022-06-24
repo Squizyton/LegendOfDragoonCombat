@@ -20,10 +20,16 @@ public class CharacterInfo : MonoBehaviour
   [Title("Non text objects")] [SerializeField]
   private Image characterIcon;
 
+  [SerializeField] private Color nonActive;
   [SerializeField] private Slider spBar;
   
   private int currentHP;
 
+
+  private void Start()
+  {
+    EndTurn();
+  }
 
   public void InjectCharacterInfo(CharacterController character)
   {
@@ -55,5 +61,11 @@ public class CharacterInfo : MonoBehaviour
   public void BeginTurn()
   {
     characterIcon.color = Color.white;
+  }
+  
+  
+  public void EndTurn()
+  {
+    characterIcon.color = nonActive;
   }
 }
