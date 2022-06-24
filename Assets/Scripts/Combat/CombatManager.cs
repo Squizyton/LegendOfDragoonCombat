@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -9,13 +10,11 @@ public class CombatManager : MonoBehaviour
     
     [SerializeField]private CombatState currentState;
     [SerializeField] private CombatAction action;
-
-    [SerializeField]
-    private int actionIndex;
-
+    [SerializeField] private int actionIndex;
     private Queue<CharacterController> characterTurns;
     
-    
+    [Title("Character Controllers")]
+    [SerializeField] private List<CharacterController> characterControllers;
     
     
     
