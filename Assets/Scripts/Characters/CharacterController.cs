@@ -88,5 +88,6 @@ public class CharacterController : MonoBehaviour
 
     public void StartTurn()
     {
+        info.BeginTurn();
     }
 }

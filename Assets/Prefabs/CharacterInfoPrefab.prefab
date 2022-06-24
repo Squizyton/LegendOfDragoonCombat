@@ -1122,6 +1122,7 @@ MonoBehaviour:
   currentMPText: {fileID: 388007427437819301}
   maxMPText: {fileID: 2942687497463333751}
   characterIcon: {fileID: 7329807007509268348}
+  nonActive: {r: 0.4627451, g: 0.4627451, b: 0.4627451, a: 1}
   spBar: {fileID: 7329807006955036367}
 --- !u!1 &7329807006955036361
 GameObject:
