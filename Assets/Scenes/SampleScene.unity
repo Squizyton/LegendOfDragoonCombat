@@ -170,7 +170,10 @@ MonoBehaviour:
   currentState: 0
   action: 0
   actionIndex: 0
-  characterControllers: []
+  characterControllers:
+  - {fileID: 77731904}
+  - {fileID: 740703874}
+  - {fileID: 2062116829}
 --- !u!1 &45065677
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 11400000, guid: 26e1fbf1f39545645ab023df8e9ba46c, type: 2}
   level: 0
   health: 0
   maxHealth: 0
@@ -541,7 +544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: -65
     m_Top: 5
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -1521,7 +1524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 11400000, guid: d6a8d1684d81f884fa17ab83bb2dc026, type: 2}
   level: 0
   health: 0
   maxHealth: 0
@@ -2502,7 +2505,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterDetailsContainer: {fileID: 112687631}
-  infoPrefab: {fileID: 0}
+  infoPrefab: {fileID: 7329807006683239404, guid: e6299197d67ab154a8161a4a96ce71ab,
+    type: 3}
 --- !u!1001 &2062116824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2632,7 +2636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ddfd902008c214e83f1cf4dc813c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 11400000, guid: c26eab1913630a44ca0dede8d008c4cb, type: 2}
   level: 0
   health: 0
   maxHealth: 0

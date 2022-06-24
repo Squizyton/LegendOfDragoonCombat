@@ -50,4 +50,10 @@ public class CharacterInfo : MonoBehaviour
       currentHPText.text = currentHP.ToString();
     }
   }
+
+
+  public void BeginTurn()
+  {
+    characterIcon.color = Color.white;
+  }
 }

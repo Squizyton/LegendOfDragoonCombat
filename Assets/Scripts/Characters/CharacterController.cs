@@ -1,20 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    [Title("The Character")]
     public BaseCharacter character;
 
-    [SerializeField] private int level;
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int mana;
-    [SerializeField] private int maxMana;
-    [SerializeField] private float staminaAmount;
-    [SerializeField] private bool readyToAttack;
-    [SerializeField] private CharacterInfo info;
+    [Title("The Character's Stats")]
+    [ReadOnly,SerializeField] private int level;
+    [ReadOnly,SerializeField] private int health;
+    [ReadOnly,SerializeField] private int maxHealth;
+    [ReadOnly,SerializeField] private int mana;
+    [ReadOnly,SerializeField] private int maxMana;
+    [ReadOnly,SerializeField] private float staminaAmount;
+    [ReadOnly,SerializeField] private bool readyToAttack;
+    [ReadOnly,SerializeField] private CharacterInfo info;
 
     [SerializeField] private Addition currentAddition;
 
@@ -25,8 +28,6 @@ public class CharacterController : MonoBehaviour
         health = character.maxHP;
         maxHealth = character.maxHP;
         mana = character.maxMP;
-
-       
     }
 
     //Stamina tick

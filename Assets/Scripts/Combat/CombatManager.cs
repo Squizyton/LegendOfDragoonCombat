@@ -15,9 +15,17 @@ public class CombatManager : MonoBehaviour
     
     [Title("Character Controllers")]
     [SerializeField] private List<CharacterController> characterControllers;
-    
-    
-    
+
+
+
+
+    private void Start()
+    {
+        instance = this;
+        
+        foreach(var character in characterControllers)
+            CombatUIManager.instance.CreateCharacterInfo(character);
+    }
 
     private void Update()
     {
@@ -32,8 +40,7 @@ public class CombatManager : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-
+    
     public void SwitchAction(float direction)
     {
         //TODO: Move to a modulo operator
