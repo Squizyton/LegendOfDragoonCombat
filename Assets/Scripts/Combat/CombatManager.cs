@@ -7,17 +7,23 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager instance;
-    
-    [SerializeField]private CombatState currentState;
+
+    [SerializeField] private CombatState currentState;
     [SerializeField] private CombatAction action;
     [SerializeField] private int actionIndex;
-    [SerializeField]private Queue<CharacterController> characterTurns;
-    [SerializeField]private CharacterController currentCharacter;
-    [Title("Character Controllers")]
-    [SerializeField] private List<CharacterController> characterControllers;
+    [SerializeField] private Queue<CharacterController> characterTurns;
+    [SerializeField] private CharacterController currentCharacter;
+
+    [Title("Character Controllers")] [SerializeField]
+    private List<CharacterController> characterControllers;
 
 
+    [Title("Enemies")] [SerializeField] private List<EnemyController> enemyControllers;
 
+    [SerializeField] private Transform[] enemySpawnPoints;
+
+    //TODO: Move this to a seperate class
+    public EnemyInfo[] availableEnemies;
 
     private void Start()
     {
@@ -31,12 +37,22 @@ public class CombatManager : MonoBehaviour
             character.ReturnInfo().EndTurn();
             characterTurns.Enqueue(character);
         }
-        
-        
+
+
+        SpawnEnemies();
+
+
         currentCharacter = characterTurns.Dequeue();
         OnNewTurn();
     }
 
+
+
+    #region Player Turn
+
+    
+
+    #endregion
     private void OnNewTurn()
     {
         currentCharacter.StartTurn();
@@ -48,9 +64,9 @@ public class CombatManager : MonoBehaviour
         switch (currentState)
         {
             case CombatState.SelectingAction:
-                if(Input.GetKeyDown(KeyCode.LeftArrow))
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchAction(-1);
-                else if(Input.GetKeyDown(KeyCode.RightArrow))
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchAction(1);
 
 
@@ -65,24 +81,7 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-
-    void NextTurn()
-    {
-        actionIndex = 0;
-        CombatUIManager.instance.MoveCircle(actionIndex);
-        //Requeue the character
-        characterTurns.Enqueue(currentCharacter);
-        //End the turn
-        currentCharacter.EndTurn();
-        //Get the next character
-        currentCharacter = characterTurns.Dequeue();
-        
-        currentCharacter.StartTurn();
-    }
-
-
-
-    public void SwitchAction(float direction)
+    private void SwitchAction(float direction)
     {
         //TODO: Move to a modulo operator
         switch (direction)
@@ -104,34 +103,42 @@ public class CombatManager : MonoBehaviour
                 {
                     actionIndex = 3;
                 }
+
                 break;
             }
         }
 
-        action = (CombatAction)actionIndex;
+        action = (CombatAction) actionIndex;
         CombatUIManager.instance.MoveCircle(actionIndex);
         //Move the cursor to the selected action
     }
 
+    void NextTurn()
+    {
+        actionIndex = 0;
+        CombatUIManager.instance.MoveCircle(actionIndex);
+        //Requeue the character
+        characterTurns.Enqueue(currentCharacter);
+        //End the turn
+        currentCharacter.EndTurn();
+        //Get the next character
+        currentCharacter = characterTurns.Dequeue();
 
-    
-    
-    
+        currentCharacter.StartTurn();
+    }
+
+
     private enum CombatState
-        {
-            SelectingAction,
-            SelectingTarget,
-        }
+    {
+        SelectingAction,
+        SelectingTarget,
+    }
 
     private enum CombatAction
-        {
-            Attack,
-            Defend,
-            Item,
-            Flee,
-        }
-    
-    
-    
-
+    {
+        Attack,
+        Defend,
+        Item,
+        Flee,
+    }
 }
