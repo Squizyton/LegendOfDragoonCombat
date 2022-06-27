@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
         maxHealth = info.health;
         damage = info.damage;
         defense = info.defense;
-        Instantiate(enemyInfo.prefab, transform);
+        Instantiate(enemyInfo.prefab, transform.position,transform.rotation,transform);
     }
     
     
