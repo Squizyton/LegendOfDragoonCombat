@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80185acc46c392446b70dce03eb66eea, type: 3}
   m_Name: TestEnemy
   m_EditorClassIdentifier: 
-  enemyName: Test Enemy
-  prefab: {fileID: 0}
-  health: 0
-  damage: 0
-  defense: 0
+  enemyName: Skeleton
+  prefab: {fileID: 2169710724360109670, guid: 3f8e31f6dc963a740abaa401e79ddb27, type: 3}
+  health: 100
+  damage: 10
+  defense: 5
