@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CombatManager : MonoBehaviour
 {
@@ -19,9 +20,6 @@ public class CombatManager : MonoBehaviour
 
 
     [Title("Enemies")] [SerializeField] private List<EnemyController> enemyControllers;
-
-    [SerializeField] private Transform[] enemySpawnPoints;
-
     //TODO: Move this to a seperate class
     public EnemyInfo[] availableEnemies;
 
@@ -47,12 +45,8 @@ public class CombatManager : MonoBehaviour
     }
 
 
-
     #region Player Turn
 
-    
-
-    #endregion
     private void OnNewTurn()
     {
         currentCharacter.StartTurn();
@@ -127,6 +121,20 @@ public class CombatManager : MonoBehaviour
         currentCharacter.StartTurn();
     }
 
+    #endregion
+
+    
+    #region Enemies
+
+    private void SpawnEnemies()
+    {
+        foreach (var enemy in enemyControllers)
+        {
+            enemy.OnSpawn(availableEnemies[0]);
+        }
+    }
+
+    #endregion
 
     private enum CombatState
     {
