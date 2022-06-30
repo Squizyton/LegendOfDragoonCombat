@@ -427,6 +427,9 @@ MonoBehaviour:
   staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
+  currentCombo: 0
+  currentDamage: 0
+  animation: {fileID: 0}
   currentAddition:
     additionName: 
     animationList: []
@@ -1057,7 +1060,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1883,6 +1886,9 @@ MonoBehaviour:
   staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
+  currentCombo: 0
+  currentDamage: 0
+  animation: {fileID: 0}
   currentAddition:
     additionName: 
     animationList: []
@@ -3634,6 +3640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdcc6bd61b865524689f249ec4db67a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  additionTimerUI: {fileID: 1634542102}
   actionBar: {fileID: 1295362164}
   characterbox: {fileID: 451632004}
   enemyBox: {fileID: 104843964}
@@ -3789,6 +3796,9 @@ MonoBehaviour:
   staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
+  currentCombo: 0
+  currentDamage: 0
+  animation: {fileID: 0}
   currentAddition:
     additionName: 
     animationList: []

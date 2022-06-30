@@ -12,7 +12,7 @@ public class Addition
 [System.Serializable]
 public class AnimationList
 {
-    public Animation animation;
+    public AnimationClip animation;
     public float animationSpeed;
     public int spGain;
 }
