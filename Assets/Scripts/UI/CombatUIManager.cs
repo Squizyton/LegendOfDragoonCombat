@@ -11,6 +11,7 @@ public class CombatUIManager : MonoBehaviour
 {
     public static CombatUIManager instance;
 
+    [Title("GameObjects")] public GameObject additionTimerUI;
     public GameObject actionBar;
     public GameObject characterbox;
     public GameObject enemyBox;
@@ -70,11 +71,18 @@ public class CombatUIManager : MonoBehaviour
 
         healthTriangle.GetComponentInChildren<Image>().color = healthColor;
         
-        healthTriangle.DOMove(enemy.transform.position + new Vector3(0, 2f, 0), 0.15f);
+        healthTriangle.DOMove(enemy.transform.position + new Vector3(0, 3f, 0), 0.15f);
     }
 
     public void MoveCircle(int index)
     {
         actionCircle.DOMove(actionPictures[index].position, 0.25f);
+    }
+
+    public void StartAdditionTimer(float value)
+    {
+        additionTimerUI.SetActive(true);
+        additionTimerUI.GetComponent<Animator>().StartPlayback();
+        additionTimerUI.GetComponent<Animator>().speed = value;
     }
 }
