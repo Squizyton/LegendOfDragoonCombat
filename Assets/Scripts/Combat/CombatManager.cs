@@ -12,6 +12,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private CombatState currentState;
     [SerializeField] private CombatAction action;
     [SerializeField] private int actionIndex;
+    [SerializeField] private int enemyIndex;
     [SerializeField] private Queue<CharacterController> characterTurns;
     [SerializeField] private CharacterController currentCharacter;
 
@@ -55,19 +56,25 @@ public class CombatManager : MonoBehaviour
 
     private void Update()
     {
+        //TODO: This could be implemented better
         switch (currentState)
         {
             case CombatState.SelectingAction:
+
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchAction(-1);
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchAction(1);
-
-
+                
+                
                 if (Input.GetKeyDown(KeyCode.Space))
-                    NextTurn();
+                   DoAction();
                 break;
             case CombatState.SelectingTarget:
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    SwitchEnemy(-1);
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    SwitchEnemy(1);
                 break;
             default:
                 Debug.LogError("How did you get here?");
@@ -105,6 +112,52 @@ public class CombatManager : MonoBehaviour
         action = (CombatAction) actionIndex;
         CombatUIManager.instance.MoveCircle(actionIndex);
         //Move the cursor to the selected action
+    }
+
+
+    public void DoAction()
+    {
+        //TODO: Convert this to a StateMachine, Preferably before the other 3 are implemented
+        switch (action)
+        {
+            case CombatAction.Attack:
+                //Turn off the player UI and enable Enemy selection UI
+                currentState = CombatState.SelectingTarget;
+                CombatUIManager.instance.TurnOnAttackUI();
+                CombatUIManager.instance.UpdateEnemySelection(enemyControllers[0]);
+                break;
+            case CombatAction.Defend:
+                break;
+            case CombatAction.Item:
+                break;
+            case CombatAction.Flee:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+
+    private void SwitchEnemy(float direction)
+    {
+        switch (direction)
+        {
+            case >= 1:
+                enemyIndex++;
+                break;
+            case < 1:
+                enemyIndex--;
+                break;
+        }
+
+        enemyIndex = enemyIndex switch
+        {
+            > 2 => 0,
+            < 0 => 2,
+            _ => enemyIndex
+        };
+        
+        CombatUIManager.instance.UpdateEnemySelection(enemyControllers[enemyIndex]);
     }
 
     void NextTurn()

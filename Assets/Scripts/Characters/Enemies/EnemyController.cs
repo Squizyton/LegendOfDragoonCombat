@@ -34,4 +34,14 @@ public class EnemyController : MonoBehaviour
     {
     }
     
+    
+    public int GetHealth()
+    {
+        return health;
+    }
+    
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }

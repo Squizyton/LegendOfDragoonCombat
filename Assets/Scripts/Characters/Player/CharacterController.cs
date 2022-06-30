@@ -25,6 +25,7 @@ public class CharacterController : MonoBehaviour
 
     public void Start()
     {
+        
         health = character.maxHP;
         maxHealth = character.maxHP;
         mana = character.maxMP;
