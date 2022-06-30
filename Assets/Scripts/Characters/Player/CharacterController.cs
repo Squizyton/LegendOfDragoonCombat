@@ -1,23 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    [Title("The Character")]
-    public BaseCharacter character;
+    [Title("The Character")] public BaseCharacter character;
 
-    [Title("The Character's Stats")]
-    [ReadOnly,SerializeField] private int level;
-    [ReadOnly,SerializeField] private int health;
-    [ReadOnly,SerializeField] private int maxHealth;
-    [ReadOnly,SerializeField] private int mana;
-    [ReadOnly,SerializeField] private int maxMana;
-    [ReadOnly,SerializeField] private float staminaAmount;
-    [ReadOnly,SerializeField] private bool readyToAttack;
-    [ReadOnly,SerializeField] private CharacterInfo info;
+
+    [Title("The Character's Stats")] [ReadOnly, SerializeField]
+    private int level;
+
+    [ReadOnly, SerializeField] private int health;
+    [ReadOnly, SerializeField] private int maxHealth;
+    [ReadOnly, SerializeField] private int mana;
+    [ReadOnly, SerializeField] private int maxMana;
+    [ReadOnly, SerializeField] private float staminaAmount;
+    [ReadOnly, SerializeField] private bool readyToAttack;
+    [ReadOnly, SerializeField] private CharacterInfo info;
+
+
+    public int currentCombo;
+    public int currentDamage;
+
+    bool canIncrementCombo;
+    private bool hitOnTime;
+    [Title("The Character's Components")] [SerializeField]
+    private Animation animation;
+
 
     [SerializeField] private Addition currentAddition;
 
@@ -25,10 +37,12 @@ public class CharacterController : MonoBehaviour
 
     public void Start()
     {
-        
         health = character.maxHP;
         maxHealth = character.maxHP;
         mana = character.maxMP;
+        
+        
+        currentAddition = character.additions[0];
     }
 
     //Stamina tick
@@ -68,6 +82,55 @@ public class CharacterController : MonoBehaviour
 
     #endregion
 
+    public void StartAttack(EnemyController enemy)
+    {
+        CombatUIManager.instance.StartAdditionTimer(currentAddition.animationList[currentCombo].animationSpeed);
+        transform.DOMove(enemy.transform.position,currentAddition.animationList[currentCombo].animationSpeed);
+    }
+
+    public void CanTriggerAttack()
+    {
+        canIncrementCombo = true;
+    }
+
+    public void CantTriggerAttack()
+    {
+        canIncrementCombo = false;
+
+        if (hitOnTime.Equals(false))
+            EndCombo();
+    }
+    public void Update()
+    {
+        if (!canIncrementCombo) return;
+
+
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        hitOnTime = true;
+        HitCombo();
+    }
+
+    private void HitCombo()
+    {
+        //Play the current combo animation
+        animation.clip = currentAddition.animationList[currentCombo].animation;
+        animation.Play();
+
+        //Increase the combo
+        currentCombo++;
+        //Start the timer for the next combo hit
+        CombatUIManager.instance.StartAdditionTimer(currentAddition.animationList[currentCombo].animationSpeed);
+    }
+
+
+
+    public void EndCombo()
+    {
+        //End the combo chain and reset the combo
+        
+        //Deal damage
+    }
+
     public void GetHit(int damage)
     {
         health -= damage;
@@ -95,7 +158,7 @@ public class CharacterController : MonoBehaviour
     {
         info.BeginTurn();
     }
-    
+
     public void EndTurn()
     {
         info.EndTurn();
