@@ -21,6 +21,7 @@ public class CombatManager : MonoBehaviour
 
 
     [Title("Enemies")] [SerializeField] private List<EnemyController> enemyControllers;
+
     //TODO: Move this to a seperate class
     public EnemyInfo[] availableEnemies;
 
@@ -66,19 +67,26 @@ public class CombatManager : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchAction(1);
                 
-                
                 if (Input.GetKeyDown(KeyCode.Space))
-                   DoAction();
+                    DoAction();
                 break;
+            
             case CombatState.SelectingTarget:
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchEnemy(-1);
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchEnemy(1);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    currentCharacter.StartAttack(enemyControllers[enemyIndex]);
+                    currentState = CombatState.Nothing;
+                }
+
                 break;
+            case CombatState.Nothing:
             default:
-                Debug.LogError("How did you get here?");
-                throw new ArgumentOutOfRangeException();
+                break;
         }
     }
 
@@ -156,7 +164,7 @@ public class CombatManager : MonoBehaviour
             < 0 => 2,
             _ => enemyIndex
         };
-        
+
         CombatUIManager.instance.UpdateEnemySelection(enemyControllers[enemyIndex]);
     }
 
@@ -176,7 +184,17 @@ public class CombatManager : MonoBehaviour
 
     #endregion
 
-    
+
+    public void CanAttack()
+    {
+        currentCharacter.CanTriggerAttack();
+    }
+
+    public void CantAttack()
+    {
+        currentCharacter.CantTriggerAttack();
+    }
+
     #region Enemies
 
     private void SpawnEnemies()
@@ -193,6 +211,7 @@ public class CombatManager : MonoBehaviour
     {
         SelectingAction,
         SelectingTarget,
+        Nothing
     }
 
     private enum CombatAction
