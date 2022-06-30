@@ -81,8 +81,8 @@ public class CombatUIManager : MonoBehaviour
 
     public void StartAdditionTimer(float value)
     {
-        additionTimerUI.SetActive(true);
-        additionTimerUI.GetComponent<Animator>().StartPlayback();
+        additionTimerUI.GetComponent<CanvasGroup>().alpha = 1;
+        additionTimerUI.GetComponent<Animator>().SetTrigger("Start");
         additionTimerUI.GetComponent<Animator>().speed = value;
     }
 }

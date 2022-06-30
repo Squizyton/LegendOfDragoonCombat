@@ -43,9 +43,20 @@ public class CharacterController : MonoBehaviour
         
         
         currentAddition = character.additions[0];
+
+
+        AddAnimations();
     }
 
     //Stamina tick
+    private void AddAnimations()
+    {
+        foreach(var anima in currentAddition.animationList)
+        {
+            Debug.Log("Adding this shit: " + anima.animation);
+            animation.AddClip(anima.animation,anima.animationName);
+        }
+    }
 
 
     /// <summary>
@@ -84,12 +95,13 @@ public class CharacterController : MonoBehaviour
 
     public void StartAttack(EnemyController enemy)
     {
-        CombatUIManager.instance.StartAdditionTimer(currentAddition.animationList[currentCombo].animationSpeed);
+        CombatUIManager.instance.StartAdditionTimer(1f);
         transform.DOMove(enemy.transform.position,currentAddition.animationList[currentCombo].animationSpeed);
     }
 
     public void CanTriggerAttack()
     {
+        hitOnTime = false;
         canIncrementCombo = true;
     }
 
@@ -106,6 +118,8 @@ public class CharacterController : MonoBehaviour
 
 
         if (!Input.GetKeyDown(KeyCode.Space)) return;
+        
+        
         hitOnTime = true;
         HitCombo();
     }
@@ -113,8 +127,7 @@ public class CharacterController : MonoBehaviour
     private void HitCombo()
     {
         //Play the current combo animation
-        animation.clip = currentAddition.animationList[currentCombo].animation;
-        animation.Play();
+        animation.Play(currentAddition.animationList[currentCombo].animationName);
 
         //Increase the combo
         currentCombo++;
@@ -126,6 +139,8 @@ public class CharacterController : MonoBehaviour
 
     public void EndCombo()
     {
+        
+        
         //End the combo chain and reset the combo
         
         //Deal damage
