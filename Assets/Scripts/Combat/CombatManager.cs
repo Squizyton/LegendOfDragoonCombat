@@ -32,7 +32,6 @@ public class CombatManager : MonoBehaviour
 
         foreach (var character in characterControllers)
         {
-            Debug.Log(character.name);
             CombatUIManager.instance.CreateCharacterInfo(character);
             character.ReturnInfo().EndTurn();
             characterTurns.Enqueue(character);
@@ -62,6 +61,9 @@ public class CombatManager : MonoBehaviour
         {
             case CombatState.SelectingAction:
 
+                if(Input.GetKeyDown(KeyCode.F))
+                    CameraManager.instance.ChangeEnvironmentCamera();
+                
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchAction(-1);
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -168,9 +170,11 @@ public class CombatManager : MonoBehaviour
         CombatUIManager.instance.UpdateEnemySelection(enemyControllers[enemyIndex]);
     }
 
-    void NextTurn()
+    public void NextTurn()
     {
         actionIndex = 0;
+        enemyIndex = 0;
+        CombatUIManager.instance.TurnOnCharacterUI();
         CombatUIManager.instance.MoveCircle(actionIndex);
         //Requeue the character
         characterTurns.Enqueue(currentCharacter);
@@ -180,6 +184,8 @@ public class CombatManager : MonoBehaviour
         currentCharacter = characterTurns.Dequeue();
 
         currentCharacter.StartTurn();
+
+        currentState = CombatState.SelectingAction;
     }
 
     #endregion

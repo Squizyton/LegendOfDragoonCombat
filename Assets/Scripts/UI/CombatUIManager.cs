@@ -43,6 +43,13 @@ public class CombatUIManager : MonoBehaviour
         character.InjectInfo(info);
     }
 
+    public void TurnOnCharacterUI()
+    {
+        characterbox.SetActive(true);
+        actionBar.SetActive(true);
+        healthTriangle.transform.position = Vector3.zero;
+        enemyBox.gameObject.SetActive(false);
+    }
 
     public void TurnOnAttackUI()
     {
