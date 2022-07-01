@@ -27,34 +27,35 @@ public class CharacterController : MonoBehaviour
 
     bool canIncrementCombo;
     private bool hitOnTime;
+
     [Title("The Character's Components")] [SerializeField]
     private Animation animation;
 
+    [SerializeField] private Animator anim;
 
     [SerializeField] private Addition currentAddition;
 
     private Action onHealthChanged;
-
+    private Vector3 originalPosition;
     public void Start()
     {
         health = character.maxHP;
         maxHealth = character.maxHP;
         mana = character.maxMP;
-        
+        originalPosition = transform.position;
+
         
         currentAddition = character.additions[0];
-
-
         AddAnimations();
     }
 
     //Stamina tick
     private void AddAnimations()
     {
-        foreach(var anima in currentAddition.animationList)
+        foreach (var anima in currentAddition.animationList)
         {
-            Debug.Log("Adding this shit: " + anima.animation);
-            animation.AddClip(anima.animation,anima.animationName);
+           
+            animation.AddClip(anima.animation, anima.animationName);
         }
     }
 
@@ -95,8 +96,18 @@ public class CharacterController : MonoBehaviour
 
     public void StartAttack(EnemyController enemy)
     {
+        anim.enabled = false;             
+        currentCombo= 0;
+       
+        
         CombatUIManager.instance.StartAdditionTimer(1f);
-        transform.DOMove(enemy.transform.position,currentAddition.animationList[currentCombo].animationSpeed);
+
+        //Get the position of in front of enemy
+        var position = enemy.transform.position + (enemy.transform.forward -new Vector3(1 , 0, 0));
+        
+        
+        Debug.Log(currentAddition.animationList[currentCombo].animationSpeed);
+        transform.DOMove(position, currentAddition.animationList[currentCombo].animationSpeed);
     }
 
     public void CanTriggerAttack()
@@ -112,18 +123,22 @@ public class CharacterController : MonoBehaviour
         if (hitOnTime.Equals(false))
             EndCombo();
     }
+
     public void Update()
     {
         if (!canIncrementCombo) return;
 
 
         if (!Input.GetKeyDown(KeyCode.Space)) return;
-        
-        
+
+
         hitOnTime = true;
         HitCombo();
     }
-
+        
+    /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime...while Animation does.
+    /// So AS OF RIGHT NOW, I'm just using Animation.Play() to play the animation. I'll fix this later, if I can come up with a better solution.
+    /// 
     private void HitCombo()
     {
         //Play the current combo animation
@@ -136,14 +151,16 @@ public class CharacterController : MonoBehaviour
     }
 
 
-
-    public void EndCombo()
+    private void EndCombo()
     {
         
-        
         //End the combo chain and reset the combo
-        
+        currentCombo = 0;
         //Deal damage
+        
+        
+        transform.DOMove(originalPosition, .4f);
+        CombatManager.instance.NextTurn();
     }
 
     public void GetHit(int damage)
