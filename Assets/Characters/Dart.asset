@@ -24,16 +24,16 @@ MonoBehaviour:
       animationName: SwordSlash
       animationSpeed: 0.5
       spGain: 0
-      damageMultiplier: 0.25
+      damageMultiplier: 1
     - animation: {fileID: 7400000, guid: cddd18e75b87ad24396dcb828a270392, type: 2}
       animationName: HighSpinAttack
       animationSpeed: 0.5
       spGain: 0
-      damageMultiplier: 0.5
+      damageMultiplier: 1.1
     - animation: {fileID: 7400000, guid: c56c4a2e3c2dcdd4787b73662e76192f, type: 2}
       animationName: JumpAttack
       animationSpeed: 0.5
       spGain: 0
-      damageMultiplier: 0.75
+      damageMultiplier: 1.2
   - additionName: 
     comboList: []

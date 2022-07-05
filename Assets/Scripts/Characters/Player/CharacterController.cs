@@ -143,10 +143,7 @@ public class CharacterController : MonoBehaviour
     {
         //If the combo is greater than the amount of animations, end the combo
         currentCombo++;
-        
-      
-        Debug.Log(currentCombo + "vs " + currentAddition.comboList.Count);
-        
+
         //Play the current combo animation
         animation.Play(currentAddition.comboList[currentCombo - 1].animationName);
 
@@ -154,8 +151,8 @@ public class CharacterController : MonoBehaviour
        
         
         //Start the timer for the next combo hit
-        if(currentCombo < currentAddition.comboList.Count)
-            CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
+        if (currentCombo < currentAddition.comboList.Count)
+            StartCoroutine(WaitForAnimation(currentAddition.comboList[currentCombo - 1].animationSpeed));
 
         if (currentCombo <= currentAddition.comboList.Count - 1) return;
 
@@ -166,11 +163,8 @@ public class CharacterController : MonoBehaviour
     private void EndCombo()
     {
         CameraManager.instance.CombatEnd();
-        
-        
         //Deal damage
         CombatManager.instance.DealDamage(CalculateDamage());
-
         //End the combo chain and reset the combo
         currentCombo = 0;
         transform.DOMove(originalPosition, .4f);
@@ -178,6 +172,12 @@ public class CharacterController : MonoBehaviour
         anim.enabled = true;
     }
 
+    private IEnumerator WaitForAnimation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
+    }
+    
     private IEnumerator EndComboDelay(float animationTime)
     {
         yield return new WaitForSeconds(animationTime);
@@ -187,23 +187,19 @@ public class CharacterController : MonoBehaviour
     //Calculate the damage to be dealt
     private int CalculateDamage()
     {
-        var damage = 0;
+        var damage = (float)character.baseDamage;
         
         //If the current combo is 0, deal the base damage
-        if (currentCombo == 0)
-        {
-            damage = character.baseDamage;
-        }
-        else
+        if (currentCombo > 0)
         {
             //If the current combo is greater than 0, deal the damage of the current combo by multiplying the base damage by the current combo multiplier
             for(var x = 0; x < currentCombo; x++)
             {
-                damage *= (int)currentAddition.comboList[x].damageMultiplier;
+                damage *= currentAddition.comboList[x].damageMultiplier;
             }
         }
-
-        return damage;
+        Debug.Log(damage);
+        return (int)damage;
     }
 
 
