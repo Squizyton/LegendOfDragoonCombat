@@ -22,15 +22,15 @@ MonoBehaviour:
     animationList:
     - animation: {fileID: 7400000, guid: cddd18e75b87ad24396dcb828a270392, type: 2}
       animationName: HighSpinAttack
-      animationSpeed: 1
+      animationSpeed: 0.8
       spGain: 0
     - animation: {fileID: 7400000, guid: c56c4a2e3c2dcdd4787b73662e76192f, type: 2}
       animationName: JumpAttack
-      animationSpeed: 1
+      animationSpeed: 0.8
       spGain: 0
     - animation: {fileID: 7400000, guid: cb3a4b3595bc4ed44a744a635857901b, type: 2}
       animationName: SwordSlash
-      animationSpeed: 2
+      animationSpeed: 0.8
       spGain: 0
   - additionName: 
     animationList: []

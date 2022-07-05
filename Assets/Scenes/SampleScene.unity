@@ -428,7 +428,7 @@ MonoBehaviour:
   currentCombo: 0
   currentDamage: 0
   animation: {fileID: 77731905}
-  anim: {fileID: 0}
+  anim: {fileID: 77731901}
   currentAddition:
     additionName: 
     animationList: []
@@ -781,7 +781,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2afc0462c6bed76478f5e87cc01688a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameras: []
+  cameras:
+  - {fileID: 382266390}
+  - {fileID: 1115779353}
+  - {fileID: 1590519835}
+  - {fileID: 236986104}
+  currentCamera: {fileID: 382266390}
+  battleCamera: {fileID: 641777136}
 --- !u!1 &236986102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,7 +1959,7 @@ GameObject:
   - component: {fileID: 641777135}
   - component: {fileID: 641777136}
   m_Layer: 0
-  m_Name: RightOfCharacters (1)
+  m_Name: BattleCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

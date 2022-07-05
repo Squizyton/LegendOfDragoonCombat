@@ -98,7 +98,7 @@ public class CharacterController : MonoBehaviour
     {
         anim.enabled = false;             
         currentCombo= 0;
-       
+       CameraManager.instance.ZoomInOnCharacter(this);
         
         CombatUIManager.instance.StartAdditionTimer(1f);
 
@@ -153,7 +153,7 @@ public class CharacterController : MonoBehaviour
 
     private void EndCombo()
     {
-        
+        CameraManager.instance.CombatEnd();
         //End the combo chain and reset the combo
         currentCombo = 0;
         //Deal damage
@@ -161,6 +161,7 @@ public class CharacterController : MonoBehaviour
         
         transform.DOMove(originalPosition, .4f);
         CombatManager.instance.NextTurn();
+        
     }
 
     public void GetHit(int damage)

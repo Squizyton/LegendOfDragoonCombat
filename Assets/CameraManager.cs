@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
    [SerializeField]private List<CinemachineVirtualCamera> cameras;
    [SerializeField] private CinemachineVirtualCamera currentCamera;
    [SerializeField]private CinemachineVirtualCamera battleCamera;
-   private int cameraIndex = 0;
+   private int cameraIndex = -1;
    void Awake()
    {
       instance = this;
@@ -22,16 +22,22 @@ public class CameraManager : MonoBehaviour
       currentCamera.Priority = 0;
       
       cameraIndex = (cameraIndex + 1) % cameras.Count;
+      currentCamera = cameras[cameraIndex];
       currentCamera.Priority = 41;
    }
 
    //Zoom in on Character Attacking
    public void ZoomInOnCharacter(CharacterController player)
    {
-      battleCamera.Follow = player.transform;
-      battleCamera.LookAt = player.transform;
-      battleCamera.ForceCameraPosition(player.transform.position + new Vector3(-1, 0, 0),
-         battleCamera.transform.rotation);
+      battleCamera.Priority = 50;
+     battleCamera.Follow = player.transform;
+     //battleCamera.LookAt = player.transform;
+     battleCamera.transform.position = player.transform.position;
    }
-   
+
+   public void CombatEnd()
+   {
+      battleCamera.Priority = 0;
+   }
+
 }
