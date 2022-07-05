@@ -52,7 +52,7 @@ public class CharacterController : MonoBehaviour
     //Stamina tick
     private void AddAnimations()
     {
-        foreach (var anima in currentAddition.animationList)
+        foreach (var anima in currentAddition.comboList)
         {
            
             animation.AddClip(anima.animation, anima.animationName);
@@ -98,16 +98,16 @@ public class CharacterController : MonoBehaviour
     {
         anim.enabled = false;             
         currentCombo= 0;
-       CameraManager.instance.ZoomInOnCharacter(this);
+       //CameraManager.instance.ZoomInOnCharacter(this);
         
-        CombatUIManager.instance.StartAdditionTimer(1f);
+        CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
 
         //Get the position of in front of enemy
         var position = enemy.transform.position + (enemy.transform.forward -new Vector3(1 , 0, 0));
         
         
-        Debug.Log(currentAddition.animationList[currentCombo].animationSpeed);
-        transform.DOMove(position, currentAddition.animationList[currentCombo].animationSpeed);
+      
+        transform.DOMove(position, currentAddition.comboList[currentCombo].animationSpeed);
     }
 
     public void CanTriggerAttack()
@@ -141,28 +141,71 @@ public class CharacterController : MonoBehaviour
     /// 
     private void HitCombo()
     {
-        //Play the current combo animation
-        animation.Play(currentAddition.animationList[currentCombo].animationName);
-
-        //Increase the combo
+        //If the combo is greater than the amount of animations, end the combo
         currentCombo++;
+        
+      
+        Debug.Log(currentCombo + "vs " + currentAddition.comboList.Count);
+        
+        //Play the current combo animation
+        animation.Play(currentAddition.comboList[currentCombo - 1].animationName);
+
+        
+       
+        
         //Start the timer for the next combo hit
-        CombatUIManager.instance.StartAdditionTimer(currentAddition.animationList[currentCombo].animationSpeed);
+        if(currentCombo < currentAddition.comboList.Count)
+            CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
+
+        if (currentCombo <= currentAddition.comboList.Count - 1) return;
+
+        StartCoroutine(EndComboDelay(currentAddition.comboList[currentAddition.comboList.Count-1].animation.length));
     }
 
 
     private void EndCombo()
     {
         CameraManager.instance.CombatEnd();
+        
+        
+        //Deal damage
+        CombatManager.instance.DealDamage(CalculateDamage());
+
         //End the combo chain and reset the combo
         currentCombo = 0;
-        //Deal damage
-        
-        
         transform.DOMove(originalPosition, .4f);
         CombatManager.instance.NextTurn();
-        
+        anim.enabled = true;
     }
+
+    private IEnumerator EndComboDelay(float animationTime)
+    {
+        yield return new WaitForSeconds(animationTime);
+        EndCombo();
+    }
+
+    //Calculate the damage to be dealt
+    private int CalculateDamage()
+    {
+        var damage = 0;
+        
+        //If the current combo is 0, deal the base damage
+        if (currentCombo == 0)
+        {
+            damage = character.baseDamage;
+        }
+        else
+        {
+            //If the current combo is greater than 0, deal the damage of the current combo by multiplying the base damage by the current combo multiplier
+            for(var x = 0; x < currentCombo; x++)
+            {
+                damage *= (int)currentAddition.comboList[x].damageMultiplier;
+            }
+        }
+
+        return damage;
+    }
+
 
     public void GetHit(int damage)
     {

@@ -734,7 +734,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0333333
+  - time: 1.1166667
     functionName: TriggerB_Event
     data: 
     objectReferenceParameter: {fileID: 0}

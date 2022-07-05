@@ -8,18 +8,18 @@ public class Addition
 {
     public string additionName;
     [Space(25)]
-    public List<AnimationList> animationList = new List<AnimationList>();
+    public List<ComboMove> comboList = new List<ComboMove>();
 }
 [System.Serializable]
-public class AnimationList
+public class ComboMove
 {
     
     [OnValueChanged("OnValueChanged")]
     public AnimationClip animation;
-    public string animationName;
+    [ReadOnly,InfoBox("This Will Be Updated Automatically")]public string animationName;
     public float animationSpeed;
     public int spGain;
-    
+    public float damageMultiplier;
     private void OnValueChanged()
     {
         animationName = animation.name;

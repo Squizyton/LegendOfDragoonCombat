@@ -23,18 +23,20 @@ public class EnemyController : MonoBehaviour
         Instantiate(enemyInfo.prefab, transform.position,transform.rotation,transform);
     }
     
-    
-    void OnTurnStart()
+    public void TakeDamage(int damageDealt)
     {
+        health -= damageDealt - defense;
+        if (health <= 0)
+        {
+            OnDeath();
+        }
     }
-    
-    
-    
-    void OnTurnEnd()
+    private void OnDeath()
     {
+        //For now just destroy the object
+        Destroy(gameObject);
+        CombatManager.instance.RemoveEnemy(this);
     }
-    
-    
     public int GetHealth()
     {
         return health;

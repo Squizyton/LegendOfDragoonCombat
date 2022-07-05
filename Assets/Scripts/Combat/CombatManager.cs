@@ -36,11 +36,7 @@ public class CombatManager : MonoBehaviour
             character.ReturnInfo().EndTurn();
             characterTurns.Enqueue(character);
         }
-
-
         SpawnEnemies();
-
-
         currentCharacter = characterTurns.Dequeue();
         OnNewTurn();
     }
@@ -61,18 +57,18 @@ public class CombatManager : MonoBehaviour
         {
             case CombatState.SelectingAction:
 
-                if(Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F))
                     CameraManager.instance.ChangeEnvironmentCamera();
-                
+
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchAction(-1);
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                     SwitchAction(1);
-                
+
                 if (Input.GetKeyDown(KeyCode.Space))
                     DoAction();
                 break;
-            
+
             case CombatState.SelectingTarget:
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchEnemy(-1);
@@ -125,7 +121,7 @@ public class CombatManager : MonoBehaviour
     }
 
 
-    public void DoAction()
+    private void DoAction()
     {
         //TODO: Convert this to a StateMachine, Preferably before the other 3 are implemented
         switch (action)
@@ -163,13 +159,19 @@ public class CombatManager : MonoBehaviour
         enemyIndex = enemyIndex switch
         {
             > 2 => 0,
-            < 0 => 2,
+            < 0 => enemyControllers.Count -1,
             _ => enemyIndex
         };
 
         CombatUIManager.instance.UpdateEnemySelection(enemyControllers[enemyIndex]);
     }
 
+    
+    public void RemoveEnemy(EnemyController enemy)
+    {
+        enemyControllers.Remove(enemy);
+    }
+    
     public void NextTurn()
     {
         actionIndex = 0;
@@ -202,6 +204,11 @@ public class CombatManager : MonoBehaviour
     }
 
     #region Enemies
+
+    public void DealDamage(int damage)
+    {
+        enemyControllers[enemyIndex].TakeDamage(damage);
+    }
 
     private void SpawnEnemies()
     {
