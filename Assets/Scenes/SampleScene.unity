@@ -422,7 +422,6 @@ MonoBehaviour:
   maxHealth: 0
   mana: 0
   maxMana: 0
-  staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
   currentCombo: 0
@@ -850,7 +849,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1168,7 +1167,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2010,7 +2009,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2257,7 +2256,6 @@ MonoBehaviour:
   maxHealth: 0
   mana: 0
   maxMana: 0
-  staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
   currentCombo: 0
@@ -3058,7 +3056,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3645,7 +3643,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3072215, y: 1}
+    m_SensorSize: {x: 1.2998791, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -4541,7 +4539,6 @@ MonoBehaviour:
   maxHealth: 0
   mana: 0
   maxMana: 0
-  staminaAmount: 0
   readyToAttack: 0
   info: {fileID: 0}
   currentCombo: 0

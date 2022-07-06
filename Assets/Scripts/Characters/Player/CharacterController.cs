@@ -17,7 +17,6 @@ public class CharacterController : MonoBehaviour
     [ReadOnly, SerializeField] private int maxHealth;
     [ReadOnly, SerializeField] private int mana;
     [ReadOnly, SerializeField] private int maxMana;
-    [ReadOnly, SerializeField] private float staminaAmount;
     [ReadOnly, SerializeField] private bool readyToAttack;
     [ReadOnly, SerializeField] private CharacterInfo info;
 
@@ -34,9 +33,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Animator anim;
 
     [SerializeField] private Addition currentAddition;
-
+    
     private Action onHealthChanged;
     private Vector3 originalPosition;
+
     public void Start()
     {
         health = character.maxHP;
@@ -44,7 +44,7 @@ public class CharacterController : MonoBehaviour
         mana = character.maxMP;
         originalPosition = transform.position;
 
-        
+
         currentAddition = character.additions[0];
         AddAnimations();
     }
@@ -54,7 +54,6 @@ public class CharacterController : MonoBehaviour
     {
         foreach (var anima in currentAddition.comboList)
         {
-           
             animation.AddClip(anima.animation, anima.animationName);
         }
     }
@@ -87,27 +86,20 @@ public class CharacterController : MonoBehaviour
         return maxMana;
     }
 
-    public float ReturnStaminaAmount()
-    {
-        return staminaAmount;
-    }
-
     #endregion
 
     public void StartAttack(EnemyController enemy)
     {
-        anim.enabled = false;             
-        currentCombo= 0;
-       //CameraManager.instance.ZoomInOnCharacter(this);
-        
+        anim.enabled = false;
+        currentCombo = 0;
+        //CameraManager.instance.ZoomInOnCharacter(this);
+
         CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
 
         //Get the position of in front of enemy
-        var position = enemy.transform.position + (enemy.transform.forward -new Vector3(1 , 0, 0));
+        var position = enemy.transform.position + (enemy.transform.forward - new Vector3(1, 0, 0));
         
-        
-      
-        transform.DOMove(position, currentAddition.comboList[currentCombo].animationSpeed);
+        transform.DOMove(position, currentAddition.comboList[currentCombo].animationSpeed / 2);
     }
 
     public void CanTriggerAttack()
@@ -120,8 +112,10 @@ public class CharacterController : MonoBehaviour
     {
         canIncrementCombo = false;
 
-        if (hitOnTime.Equals(false))
-            EndCombo();
+        if (hitOnTime) return;
+        
+        Debug.Log("Not hit on time");
+        EndCombo();
     }
 
     public void Update()
@@ -130,12 +124,13 @@ public class CharacterController : MonoBehaviour
 
 
         if (!Input.GetKeyDown(KeyCode.Space)) return;
-
+        
+        Debug.Log("ASOUIDHJAOSJDOPJASODOIASHJDOihj");
 
         hitOnTime = true;
         HitCombo();
     }
-        
+
     /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime...while Animation does.
     /// So AS OF RIGHT NOW, I'm just using Animation.Play() to play the animation. I'll fix this later, if I can come up with a better solution.
     /// 
@@ -146,22 +141,19 @@ public class CharacterController : MonoBehaviour
 
         //Play the current combo animation
         animation.Play(currentAddition.comboList[currentCombo - 1].animationName);
-
-
-        CombatManager.instance.HitEnemy();
-        
         //Start the timer for the next combo hit
         if (currentCombo < currentAddition.comboList.Count)
             StartCoroutine(WaitForAnimation(currentAddition.comboList[currentCombo - 1].animationSpeed));
 
         if (currentCombo <= currentAddition.comboList.Count - 1) return;
 
-        StartCoroutine(EndComboDelay(currentAddition.comboList[currentAddition.comboList.Count-1].animation.length));
+        StartCoroutine(EndComboDelay(currentAddition.comboList[^1].animation.length));
     }
 
 
     private void EndCombo()
     {
+        transform.DOKill();
         CameraManager.instance.CombatEnd();
         //Deal damage
         CombatManager.instance.DealDamage(CalculateDamage());
@@ -171,35 +163,38 @@ public class CharacterController : MonoBehaviour
         CombatManager.instance.NextTurn();
         anim.enabled = true;
     }
-
+    
     private IEnumerator WaitForAnimation(float time)
     {
         yield return new WaitForSeconds(time);
+        CombatManager.instance.HitEnemy();
         CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
     }
-    
+
     private IEnumerator EndComboDelay(float animationTime)
     {
         yield return new WaitForSeconds(animationTime);
+        CombatManager.instance.HitEnemy();
         EndCombo();
     }
 
     //Calculate the damage to be dealt
     private int CalculateDamage()
     {
-        var damage = (float)character.baseDamage;
-        
+        var damage = (float) character.baseDamage;
+
         //If the current combo is 0, deal the base damage
         if (currentCombo > 0)
         {
             //If the current combo is greater than 0, deal the damage of the current combo by multiplying the base damage by the current combo multiplier
-            for(var x = 0; x < currentCombo; x++)
+            for (var x = 0; x < currentCombo; x++)
             {
                 damage *= currentAddition.comboList[x].damageMultiplier;
             }
         }
+
         Debug.Log(damage);
-        return (int)damage;
+        return (int) damage;
     }
 
 

@@ -22,7 +22,7 @@ MonoBehaviour:
     comboList:
     - animation: {fileID: 7400000, guid: cb3a4b3595bc4ed44a744a635857901b, type: 2}
       animationName: SwordSlash
-      animationSpeed: 0.5
+      animationSpeed: 1
       spGain: 0
       damageMultiplier: 1
     - animation: {fileID: 7400000, guid: cddd18e75b87ad24396dcb828a270392, type: 2}
