@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public EnemyInfo enemyInfo;
+
+    [SerializeField] public Animator anim;
     
     
     [Title("Stats")]
@@ -21,6 +23,8 @@ public class EnemyController : MonoBehaviour
         damage = info.damage;
         defense = info.defense;
         Instantiate(enemyInfo.prefab, transform.position,transform.rotation,transform);
+        
+        anim = GetComponentInChildren<Animator>();
     }
     
     public void TakeDamage(int damageDealt)
@@ -31,6 +35,12 @@ public class EnemyController : MonoBehaviour
             OnDeath();
         }
     }
+
+    public void HitAnimation()
+    {
+        anim.SetTrigger("Hit");
+    }
+
     private void OnDeath()
     {
         //For now just destroy the object

@@ -210,6 +210,11 @@ public class CombatManager : MonoBehaviour
         enemyControllers[enemyIndex].TakeDamage(damage);
     }
 
+    public void HitEnemy()
+    {
+        enemyControllers[enemyIndex].HitAnimation();
+    }
+    
     private void SpawnEnemies()
     {
         foreach (var enemy in enemyControllers)

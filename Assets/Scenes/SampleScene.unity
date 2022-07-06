@@ -431,7 +431,7 @@ MonoBehaviour:
   anim: {fileID: 77731901}
   currentAddition:
     additionName: 
-    animationList: []
+    comboList: []
 --- !u!111 &77731905
 Animation:
   m_ObjectHideFlags: 0
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.5
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -2266,7 +2266,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   currentAddition:
     additionName: 
-    animationList: []
+    comboList: []
 --- !u!111 &740703875
 Animation:
   m_ObjectHideFlags: 0
@@ -2650,6 +2650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyInfo: {fileID: 0}
+  anim: {fileID: 0}
   health: 0
   maxHealth: 0
   damage: 0
@@ -2918,6 +2919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyInfo: {fileID: 0}
+  anim: {fileID: 0}
   health: 0
   maxHealth: 0
   damage: 0
@@ -3467,6 +3469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyInfo: {fileID: 0}
+  anim: {fileID: 0}
   health: 0
   maxHealth: 0
   damage: 0
@@ -4547,7 +4550,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   currentAddition:
     additionName: 
-    animationList: []
+    comboList: []
 --- !u!111 &2062116830
 Animation:
   m_ObjectHideFlags: 0

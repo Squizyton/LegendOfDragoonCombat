@@ -147,8 +147,8 @@ public class CharacterController : MonoBehaviour
         //Play the current combo animation
         animation.Play(currentAddition.comboList[currentCombo - 1].animationName);
 
-        
-       
+
+        CombatManager.instance.HitEnemy();
         
         //Start the timer for the next combo hit
         if (currentCombo < currentAddition.comboList.Count)
