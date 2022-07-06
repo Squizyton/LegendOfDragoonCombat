@@ -9,13 +9,15 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager instance;
 
-    [SerializeField] private CombatState currentState;
+    public CombatState currentState;
     [SerializeField] private CombatAction action;
     [SerializeField] private int actionIndex;
     [SerializeField] private int enemyIndex;
     [SerializeField] private Queue<CharacterController> characterTurns;
     [SerializeField] private CharacterController currentCharacter;
-
+    private IState[] states;
+    private IState currentStateInstance;
+    
     [Title("Character Controllers")] [SerializeField]
     private List<CharacterController> characterControllers;
 
@@ -90,9 +92,9 @@ public class CombatManager : MonoBehaviour
 
     private void SwitchAction(float direction)
     {
-        //TODO: Move to a modulo operator
         switch (direction)
         {
+            //TODO: Move to a modulo operator
             case > 0:
             {
                 actionIndex++;
@@ -115,32 +117,17 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        action = (CombatAction) actionIndex;
-        CombatUIManager.instance.MoveCircle(actionIndex);
+        currentStateInstance = states[actionIndex];
+      
         //Move the cursor to the selected action
+        CombatUIManager.instance.MoveCircle(actionIndex);
+      
     }
 
 
     private void DoAction()
     {
-        //TODO: Convert this to a StateMachine, Preferably before the other 3 are implemented
-        switch (action)
-        {
-            case CombatAction.Attack:
-                //Turn off the player UI and enable Enemy selection UI
-                currentState = CombatState.SelectingTarget;
-                CombatUIManager.instance.TurnOnAttackUI();
-                CombatUIManager.instance.UpdateEnemySelection(enemyControllers[0]);
-                break;
-            case CombatAction.Defend:
-                break;
-            case CombatAction.Item:
-                break;
-            case CombatAction.Flee:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+        currentStateInstance.Action();
     }
 
 
@@ -205,6 +192,12 @@ public class CombatManager : MonoBehaviour
 
     #region Enemies
 
+    
+    public EnemyController[] GetEnemies()
+    {
+        return enemyControllers.ToArray();
+    }
+    
     public void DealDamage(int damage)
     {
         enemyControllers[enemyIndex].TakeDamage(damage);
@@ -225,7 +218,7 @@ public class CombatManager : MonoBehaviour
 
     #endregion
 
-    private enum CombatState
+    public enum CombatState
     {
         SelectingAction,
         SelectingTarget,
