@@ -19,7 +19,7 @@ public class CharacterController : MonoBehaviour
     [ReadOnly, SerializeField] private int maxMana;
     [ReadOnly, SerializeField] private bool readyToAttack;
     [ReadOnly, SerializeField] private CharacterInfo info;
-
+    private bool isDefending;
 
     public int currentCombo;
     public int currentDamage;
@@ -37,6 +37,7 @@ public class CharacterController : MonoBehaviour
     private Action onHealthChanged;
     private Vector3 originalPosition;
 
+    #region Start Functions
     public void Start()
     {
         health = character.maxHP;
@@ -58,6 +59,13 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    public void InjectInfo(CharacterInfo ui)
+    {
+        info = ui;
+        onHealthChanged += () => info.UpdateHP(this);
+    }
+    #endregion
+    
 
     /// <summary>
     /// To be honest, I could just set all variables to public
@@ -66,6 +74,12 @@ public class CharacterController : MonoBehaviour
 
     #region Getters
 
+    
+    public CharacterInfo ReturnInfo()
+    {
+        return info;
+    }
+    
     public int ReturnHealth()
     {
         return health;
@@ -87,7 +101,8 @@ public class CharacterController : MonoBehaviour
     }
 
     #endregion
-
+    
+    #region Combo System
     public void StartAttack(EnemyController enemy)
     {
         anim.enabled = false;
@@ -177,6 +192,15 @@ public class CharacterController : MonoBehaviour
         CombatManager.instance.HitEnemy();
         EndCombo();
     }
+    
+    #endregion
+
+
+    public void Defend()
+    {
+        isDefending = true;
+        anim.SetTrigger("defend");
+    }
 
     //Calculate the damage to be dealt
     private int CalculateDamage()
@@ -196,8 +220,6 @@ public class CharacterController : MonoBehaviour
         Debug.Log(damage);
         return (int) damage;
     }
-
-
     public void GetHit(int damage)
     {
         health -= damage;
@@ -209,20 +231,15 @@ public class CharacterController : MonoBehaviour
 
         onHealthChanged?.Invoke();
     }
-
-    public CharacterInfo ReturnInfo()
-    {
-        return info;
-    }
-
-    public void InjectInfo(CharacterInfo ui)
-    {
-        info = ui;
-        onHealthChanged += () => info.UpdateHP(this);
-    }
-
+    
     public void StartTurn()
     {
+        if (isDefending)
+        {
+            isDefending = false;
+            anim.SetTrigger("idle");
+        }
+
         info.BeginTurn();
     }
 

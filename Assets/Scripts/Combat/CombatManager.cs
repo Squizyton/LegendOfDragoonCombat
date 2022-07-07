@@ -46,6 +46,11 @@ public class CombatManager : MonoBehaviour
 
     #region Player Turn
 
+    public CharacterController ReturnCurrentCharacter()
+    {
+        return currentCharacter;
+    }
+    
     private void OnNewTurn()
     {
         currentCharacter.StartTurn();
