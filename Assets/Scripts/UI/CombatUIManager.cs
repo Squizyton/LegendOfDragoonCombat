@@ -88,8 +88,15 @@ public class CombatUIManager : MonoBehaviour
 
     public void StartAdditionTimer(float value)
     {
+        Debug.Log("called timer");
         additionTimerUI.GetComponent<CanvasGroup>().alpha = 1;
         additionTimerUI.GetComponent<Animator>().SetTrigger("Start");
         additionTimerUI.GetComponent<Animator>().speed = value;
+    }
+    
+    public void TurnOffAttackUI()
+    {
+        enemyBox.gameObject.SetActive(false);
+        healthTriangle.transform.position = Vector3.zero;
     }
 }

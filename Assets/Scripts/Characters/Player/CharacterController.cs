@@ -105,6 +105,8 @@ public class CharacterController : MonoBehaviour
     #region Combo System
     public void StartAttack(EnemyController enemy)
     {
+        CombatUIManager.instance.TurnOffAttackUI();
+        
         anim.enabled = false;
         currentCombo = 0;
         //CameraManager.instance.ZoomInOnCharacter(this);
@@ -139,8 +141,6 @@ public class CharacterController : MonoBehaviour
 
 
         if (!Input.GetKeyDown(KeyCode.Space)) return;
-        
-        Debug.Log("ASOUIDHJAOSJDOPJASODOIASHJDOihj");
 
         hitOnTime = true;
         HitCombo();
@@ -234,6 +234,10 @@ public class CharacterController : MonoBehaviour
     
     public void StartTurn()
     {
+        //If any weird Coroutines is running, kill it
+        StopAllCoroutines();
+        
+        
         if (isDefending)
         {
             isDefending = false;

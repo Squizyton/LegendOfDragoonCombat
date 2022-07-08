@@ -10,7 +10,6 @@ public class CombatManager : MonoBehaviour
     public static CombatManager instance;
 
     public CombatState currentState;
-    [SerializeField] private CombatAction action;
     [SerializeField] private int actionIndex;
     [SerializeField] private int enemyIndex;
     [SerializeField] private Queue<CharacterController> characterTurns;
@@ -98,6 +97,7 @@ public class CombatManager : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    Debug.Log("Called");
                     currentCharacter.StartAttack(enemyControllers[enemyIndex]);
                     currentState = CombatState.Nothing;
                 }
@@ -146,7 +146,14 @@ public class CombatManager : MonoBehaviour
 
     private void DoAction()
     {
-        currentStateInstance.Action();
+        try
+        {
+            currentStateInstance.Action();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
     }
 
 
@@ -180,6 +187,8 @@ public class CombatManager : MonoBehaviour
     
     public void NextTurn()
     {
+        
+        
         actionIndex = 0;
         enemyIndex = 0;
         CombatUIManager.instance.TurnOnCharacterUI();
@@ -191,6 +200,7 @@ public class CombatManager : MonoBehaviour
         //Get the next character
         currentCharacter = characterTurns.Dequeue();
 
+        
         currentCharacter.StartTurn();
 
         currentState = CombatState.SelectingAction;
