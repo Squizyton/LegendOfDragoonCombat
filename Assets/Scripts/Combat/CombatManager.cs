@@ -32,6 +32,8 @@ public class CombatManager : MonoBehaviour
         instance = this;
         characterTurns = new Queue<CharacterController>();
 
+        InitializeStates();
+        
         foreach (var character in characterControllers)
         {
             CombatUIManager.instance.CreateCharacterInfo(character);
@@ -41,6 +43,18 @@ public class CombatManager : MonoBehaviour
         SpawnEnemies();
         currentCharacter = characterTurns.Dequeue();
         OnNewTurn();
+    }
+
+    private void InitializeStates()
+    {
+        states = new IState[4];
+        states[0] = new Attack();
+        states[1] = new Defend();
+        states[2] = null;
+        states[3] = null;
+
+
+        currentStateInstance = states[0];
     }
 
 
@@ -228,13 +242,5 @@ public class CombatManager : MonoBehaviour
         SelectingAction,
         SelectingTarget,
         Nothing
-    }
-
-    private enum CombatAction
-    {
-        Attack,
-        Defend,
-        Item,
-        Flee,
     }
 }
