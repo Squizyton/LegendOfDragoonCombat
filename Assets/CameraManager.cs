@@ -30,14 +30,22 @@ public class CameraManager : MonoBehaviour
    public void ZoomInOnCharacter(CharacterController player)
    {
       battleCamera.Priority = 50;
-     battleCamera.Follow = player.transform;
-     //battleCamera.LookAt = player.transform;
-     battleCamera.transform.position = player.transform.position;
+
+      battleCamera.transform.parent = player.transform;
+      
+      //lerp the camera left of the player
+      battleCamera.transform.localPosition = new Vector3(-5, 0, 0);
+      
+      //Rotate the camera to look at the player with offset
+      battleCamera.transform.LookAt(player.transform.position);
    }
 
    public void CombatEnd()
    {
       battleCamera.Priority = 0;
+      
+      //reset parent
+      battleCamera.transform.parent = null;
    }
 
 }

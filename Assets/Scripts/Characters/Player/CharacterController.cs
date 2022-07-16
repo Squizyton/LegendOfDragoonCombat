@@ -109,7 +109,7 @@ public class CharacterController : MonoBehaviour
         
         anim.enabled = false;
         currentCombo = 0;
-        //CameraManager.instance.ZoomInOnCharacter(this);
+        CameraManager.instance.ZoomInOnCharacter(this);
 
         CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
 
