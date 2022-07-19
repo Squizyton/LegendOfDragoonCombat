@@ -209,17 +209,15 @@ public class CharacterController : MonoBehaviour
         var damage = (float) character.baseDamage;
 
         //If the current combo is 0, deal the base damage
-        if (currentCombo > 0)
+        if (currentCombo <= 0) return (int) damage;
+        
+        
+        //If the current combo is greater than 0, deal the damage of the current combo by multiplying the base damage by the current combo multiplier
+        for (var x = 0; x < currentCombo; x++)
         {
-            //If the current combo is greater than 0, deal the damage of the current combo by multiplying the base damage by the current combo multiplier
-            for (var x = 0; x < currentCombo; x++)
-            {
-                damage *= currentAddition.comboList[x].damageMultiplier;
-            }
+            damage *= currentAddition.comboList[x].damageMultiplier;
         }
-
-        Debug.Log(damage);
-        return (int) damage;
+        return (int)damage;
     }
     public void GetHit(int damage)
     {

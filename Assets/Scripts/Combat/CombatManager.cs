@@ -97,7 +97,7 @@ public class CombatManager : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Debug.Log("Called");
+               
                     currentCharacter.StartAttack(enemyControllers[enemyIndex]);
                     currentState = CombatState.Nothing;
                 }
