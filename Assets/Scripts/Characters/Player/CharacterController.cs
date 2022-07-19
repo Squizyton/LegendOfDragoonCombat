@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
-
+using UnityEngine.VFX;
 public class CharacterController : MonoBehaviour
 {
     [Title("The Character")] public BaseCharacter character;
@@ -27,11 +27,16 @@ public class CharacterController : MonoBehaviour
     bool canIncrementCombo;
     private bool hitOnTime;
 
-    [Title("The Character's Components")] [SerializeField]
-    private Animation animationPlayer;
-
+    [Title("The Character's Components")] 
+    
+    
+    
+    [Header("Animation Variables")]
     [SerializeField] private Animator anim;
+    [SerializeField]private Animation animationPlayer;
 
+    [Title("Misc Variables")] [SerializeField]
+    private VisualEffect defendParticles;
     [SerializeField] private Addition currentAddition;
     
     private Action onHealthChanged;
@@ -146,7 +151,8 @@ public class CharacterController : MonoBehaviour
         HitCombo();
     }
 
-    /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime...while Animation does.
+    /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime(that I know of currently)...while Animation does.
+    /// Don't do this. It's a bad idea. Just use Unity's Animator.
     /// So AS OF RIGHT NOW, I'm just using Animation.Play() to play the animation. I'll fix this later, if I can come up with a better solution.
     /// 
     private void HitCombo()
@@ -201,6 +207,7 @@ public class CharacterController : MonoBehaviour
     {
         isDefending = true;
         anim.SetTrigger("defend");
+        defendParticles.Play();
     }
 
     //Calculate the damage to be dealt
@@ -236,13 +243,11 @@ public class CharacterController : MonoBehaviour
         //If any weird Coroutines is running, kill it
         StopAllCoroutines();
         
-        
         if (isDefending)
         {
             isDefending = false;
             anim.SetTrigger("idle");
         }
-
         info.BeginTurn();
     }
 
