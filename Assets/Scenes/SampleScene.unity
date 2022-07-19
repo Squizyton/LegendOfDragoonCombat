@@ -426,7 +426,7 @@ MonoBehaviour:
   info: {fileID: 0}
   currentCombo: 0
   currentDamage: 0
-  animation: {fileID: 77731905}
+  animationPlayer: {fileID: 77731905}
   anim: {fileID: 77731901}
   currentAddition:
     additionName: 
@@ -787,6 +787,7 @@ MonoBehaviour:
   - {fileID: 236986104}
   currentCamera: {fileID: 382266390}
   battleCamera: {fileID: 641777136}
+  battleCameraOffset: {x: -5, y: 2, z: 1}
 --- !u!1 &236986102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,7 +2261,7 @@ MonoBehaviour:
   info: {fileID: 0}
   currentCombo: 0
   currentDamage: 0
-  animation: {fileID: 740703875}
+  animationPlayer: {fileID: 0}
   anim: {fileID: 0}
   currentAddition:
     additionName: 
@@ -4543,7 +4544,7 @@ MonoBehaviour:
   info: {fileID: 0}
   currentCombo: 0
   currentDamage: 0
-  animation: {fileID: 2062116830}
+  animationPlayer: {fileID: 0}
   anim: {fileID: 0}
   currentAddition:
     additionName: 

@@ -10,6 +10,9 @@ public class CameraManager : MonoBehaviour
    [SerializeField]private List<CinemachineVirtualCamera> cameras;
    [SerializeField] private CinemachineVirtualCamera currentCamera;
    [SerializeField]private CinemachineVirtualCamera battleCamera;
+   
+   [Header("Camera Settings")]
+   [SerializeField]private Vector3 battleCameraOffset;
    private int cameraIndex = -1;
    void Awake()
    {
@@ -34,7 +37,7 @@ public class CameraManager : MonoBehaviour
       battleCamera.transform.parent = player.transform;
       
       //lerp the camera left of the player
-      battleCamera.transform.localPosition = new Vector3(-5, 0, 0);
+      battleCamera.transform.localPosition = battleCameraOffset;
       
       //Rotate the camera to look at the player with offset
       battleCamera.transform.LookAt(player.transform.position);

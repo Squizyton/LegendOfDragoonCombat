@@ -28,7 +28,7 @@ public class CharacterController : MonoBehaviour
     private bool hitOnTime;
 
     [Title("The Character's Components")] [SerializeField]
-    private Animation animation;
+    private Animation animationPlayer;
 
     [SerializeField] private Animator anim;
 
@@ -55,7 +55,7 @@ public class CharacterController : MonoBehaviour
     {
         foreach (var anima in currentAddition.comboList)
         {
-            animation.AddClip(anima.animation, anima.animationName);
+            animationPlayer.AddClip(anima.animation, anima.animationName);
         }
     }
 
@@ -155,7 +155,7 @@ public class CharacterController : MonoBehaviour
         currentCombo++;
 
         //Play the current combo animation
-        animation.Play(currentAddition.comboList[currentCombo - 1].animationName);
+        animationPlayer.Play(currentAddition.comboList[currentCombo - 1].animationName);
         //Start the timer for the next combo hit
         if (currentCombo < currentAddition.comboList.Count)
             StartCoroutine(WaitForAnimation(currentAddition.comboList[currentCombo - 1].animationSpeed));
@@ -190,6 +190,7 @@ public class CharacterController : MonoBehaviour
     {
         yield return new WaitForSeconds(animationTime);
         CombatManager.instance.HitEnemy();
+        yield return new WaitForSeconds(2f);
         EndCombo();
     }
     
