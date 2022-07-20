@@ -206,7 +206,7 @@ public class CharacterController : MonoBehaviour
     public void Defend()
     {
         isDefending = true;
-        anim.SetTrigger("defend");
+        anim.SetTrigger("defend"); 
         defendParticles.Play();
     }
 
