@@ -17,6 +17,7 @@ public class BaseCharacter : ScriptableObject
    public int maxHP;
    public int maxMP;
    public int baseDamage;
+   public int baseSpeed;
    
    [Space]
    [Title("Additions"),ListDrawerSettings(NumberOfItemsPerPage = 1)]
