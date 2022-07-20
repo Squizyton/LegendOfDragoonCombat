@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour,ITurnable
 {
     public EnemyInfo enemyInfo;
 
@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField]private int maxHealth;
     [SerializeField]private int damage;
     [SerializeField] private int defense;
+    [SerializeField] private int speed;
     public void OnSpawn(EnemyInfo info)
     {
         enemyInfo = info;
@@ -36,11 +37,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void StartTurn()
+    {
+        Debug.LogError("Not Implemented");
+    }
     public void HitAnimation()
     {
         anim.SetTrigger("Hit");
     }
-
     private void OnDeath()
     {
         //For now just destroy the object
@@ -51,9 +55,27 @@ public class EnemyController : MonoBehaviour
     {
         return health;
     }
+
+    public void SetSpeed(int value)
+    { 
+        speed = value;
+    }
+    public int ReturnSpeed()
+    {
+        return speed;
+    }
     
+
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+    public void TakeTurn()
+    {
+        StartTurn();
+    }
+    public void EndTurn()
+    {
+        
     }
 }

@@ -5,7 +5,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.VFX;
-public class CharacterController : MonoBehaviour
+public class CharacterController : MonoBehaviour,ITurnable
 {
     [Title("The Character")] public BaseCharacter character;
 
@@ -18,6 +18,7 @@ public class CharacterController : MonoBehaviour
     [ReadOnly, SerializeField] private int mana;
     [ReadOnly, SerializeField] private int maxMana;
     [ReadOnly, SerializeField] private bool readyToAttack;
+    [ReadOnly, SerializeField] private int speed;
     [ReadOnly, SerializeField] private CharacterInfo info;
     private bool isDefending;
 
@@ -103,6 +104,16 @@ public class CharacterController : MonoBehaviour
     public float ReturnMaxMana()
     {
         return maxMana;
+    }
+
+    public int ReturnSpeed()
+    {
+        return speed;
+    }
+    
+    public void SetSpeed(int speed)
+    {
+        this.speed = speed;
     }
 
     #endregion
@@ -254,5 +265,10 @@ public class CharacterController : MonoBehaviour
     public void EndTurn()
     {
         info.EndTurn();
+    }
+
+    public void TakeTurn()
+    {
+        StartTurn();
     }
 }
