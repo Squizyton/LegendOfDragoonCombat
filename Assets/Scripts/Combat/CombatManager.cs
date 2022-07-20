@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,10 +13,12 @@ public class CombatManager : MonoBehaviour
     public CombatState currentState;
     [SerializeField] private int actionIndex;
     [SerializeField] private int enemyIndex;
-    [SerializeField] private Queue<CharacterController> characterTurns;
-    [SerializeField] private CharacterController currentCharacter;
+    [SerializeField] private Queue<ITurnable> turns;
+    [SerializeField] private ITurnable currentActor;
     private IState[] states;
     private IState currentStateInstance;
+    
+    private List<ITurnable> baseActors;
     
     [Title("Character Controllers")] [SerializeField]
     private List<CharacterController> characterControllers;
@@ -23,24 +26,32 @@ public class CombatManager : MonoBehaviour
 
     [Title("Enemies")] [SerializeField] private List<EnemyController> enemyControllers;
 
-    //TODO: Move this to a seperate class
+    //TODO: Move this to a separate class
     public EnemyInfo[] availableEnemies;
 
     private void Start()
     {
         instance = this;
-        characterTurns = new Queue<CharacterController>();
-
+        turns = new Queue<ITurnable>();
+        baseActors = new List<ITurnable>();
         InitializeStates();
+        
+        
         
         foreach (var character in characterControllers)
         {
             CombatUIManager.instance.CreateCharacterInfo(character);
             character.ReturnInfo().EndTurn();
-            characterTurns.Enqueue(character);
+            baseActors.Add(character);
         }
+        
+        foreach(var enemy in enemyControllers)
+            baseActors.Add(enemy);
+        
+        ShuffleNewTurns();
+        
         SpawnEnemies();
-        currentCharacter = characterTurns.Dequeue();
+        currentActor = turns.Dequeue();
         OnNewTurn();
     }
 
@@ -61,13 +72,46 @@ public class CombatManager : MonoBehaviour
 
     public CharacterController ReturnCurrentCharacter()
     {
-        return currentCharacter;
+        return currentActor as CharacterController;
     }
     
     private void OnNewTurn()
     {
-        currentCharacter.StartTurn();
-        currentState = CombatState.SelectingAction;
+        if (turns.Count > 0)
+        {
+            currentActor.TakeTurn();
+            currentState = CombatState.SelectingAction;
+        }
+        else
+        {
+            ShuffleNewTurns();
+        }
+    }
+
+
+    private void ShuffleNewTurns()
+    {
+        var temp= new List<ITurnable>();
+        
+        foreach (var actor in baseActors)
+        {
+            switch (actor)
+            {
+                case CharacterController character:
+                    character.SetSpeed(character.ReturnSpeed() * Random.Range(1,3));
+                    temp.Add(actor);
+                    break;
+                case EnemyController enemy:
+                    enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1,3));   
+                    temp.Add(actor);
+                    break;
+            }
+        }
+        
+        //Organize by speed and add to turns queue
+        temp.Where(i => i.ReturnSpeed() > 0).OrderByDescending(i => i.ReturnSpeed()).ToList().ForEach(i => turns.Enqueue(i));
+        
+        OnNewTurn();
     }
 
     private void Update()
@@ -98,7 +142,7 @@ public class CombatManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                
-                    currentCharacter.StartAttack(enemyControllers[enemyIndex]);
+                    ReturnCurrentCharacter().StartAttack(enemyControllers[enemyIndex]);
                     currentState = CombatState.Nothing;
                 }
 
@@ -187,22 +231,17 @@ public class CombatManager : MonoBehaviour
     
     public void NextTurn()
     {
-        
-        
         actionIndex = 0;
         enemyIndex = 0;
         CombatUIManager.instance.TurnOnCharacterUI();
         CombatUIManager.instance.MoveCircle(actionIndex);
         //Requeue the character
-        characterTurns.Enqueue(currentCharacter);
+        turns.Enqueue(currentActor);
         //End the turn
-        currentCharacter.EndTurn();
+        currentActor.EndTurn();
         //Get the next character
-        currentCharacter = characterTurns.Dequeue();
-
-        
-        currentCharacter.StartTurn();
-
+        currentActor = turns.Dequeue();
+        currentActor.TakeTurn();
         currentState = CombatState.SelectingAction;
     }
 
@@ -211,12 +250,12 @@ public class CombatManager : MonoBehaviour
 
     public void CanAttack()
     {
-        currentCharacter.CanTriggerAttack();
+        ReturnCurrentCharacter().CanTriggerAttack();
     }
 
     public void CantAttack()
     {
-        currentCharacter.CantTriggerAttack();
+       ReturnCurrentCharacter().CantTriggerAttack();
     }
 
     #region Enemies
