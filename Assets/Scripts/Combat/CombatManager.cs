@@ -36,23 +36,21 @@ public class CombatManager : MonoBehaviour
         baseActors = new List<ITurnable>();
         InitializeStates();
         
-        
-        
         foreach (var character in characterControllers)
         {
             CombatUIManager.instance.CreateCharacterInfo(character);
             character.ReturnInfo().EndTurn();
             baseActors.Add(character);
         }
-        
         foreach(var enemy in enemyControllers)
             baseActors.Add(enemy);
         
-        ShuffleNewTurns();
         
+        Debug.Log("Base Actors: " + baseActors.Count);
+        
+        //ShuffleNewTurns();
         SpawnEnemies();
         currentActor = turns.Dequeue();
-        OnNewTurn();
     }
 
     private void InitializeStates()
@@ -89,25 +87,30 @@ public class CombatManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// I'm breaking things
+    /// </summary>
     private void ShuffleNewTurns()
     {
         var temp= new List<ITurnable>();
-        
-        foreach (var actor in baseActors)
+
+        for (var index = 0; index < baseActors.Count; index++)
         {
+            var actor = baseActors[index];
             switch (actor)
             {
                 case CharacterController character:
-                    character.SetSpeed(character.ReturnSpeed() * Random.Range(1,3));
+                    character.SetSpeed(character.ReturnSpeed() * Random.Range(1, 3));
                     temp.Add(actor);
                     break;
                 case EnemyController enemy:
-                    enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1,3));   
+                    enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1, 3));
                     temp.Add(actor);
                     break;
             }
+            
         }
-        
+
         //Organize by speed and add to turns queue
         temp.Where(i => i.ReturnSpeed() > 0).OrderByDescending(i => i.ReturnSpeed()).ToList().ForEach(i => turns.Enqueue(i));
         
