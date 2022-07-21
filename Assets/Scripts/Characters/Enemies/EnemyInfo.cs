@@ -11,7 +11,7 @@ public class EnemyInfo : ScriptableObject
     public int health;
     public int damage;
     public int defense;
-    
+    public int baseSpeed;
     
     [Title("Items"),InfoBox("CURRENTLY NOT BEING USED. DO NOT USE YET")]
     public List<AvailableItems> items;

@@ -48,9 +48,10 @@ public class CombatManager : MonoBehaviour
         
         Debug.Log("Base Actors: " + baseActors.Count);
         
-        //ShuffleNewTurns();
+       
         SpawnEnemies();
-        currentActor = turns.Dequeue();
+        ShuffleNewTurns();
+        
     }
 
     private void InitializeStates()
@@ -77,6 +78,11 @@ public class CombatManager : MonoBehaviour
     {
         if (turns.Count > 0)
         {
+            
+            currentActor = turns.Dequeue();
+
+            Debug.Log(currentActor + "speed: " + currentActor.ReturnSpeed());
+            
             currentActor.TakeTurn();
             currentState = CombatState.SelectingAction;
         }
@@ -94,26 +100,25 @@ public class CombatManager : MonoBehaviour
     {
         var temp= new List<ITurnable>();
 
-        for (var index = 0; index < baseActors.Count; index++)
+        foreach (var actor in baseActors)
         {
-            var actor = baseActors[index];
             switch (actor)
             {
                 case CharacterController character:
                     character.SetSpeed(character.ReturnSpeed() * Random.Range(1, 3));
-                    temp.Add(actor);
                     break;
                 case EnemyController enemy:
                     enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1, 3));
-                    temp.Add(actor);
                     break;
             }
-            
-        }
 
-        //Organize by speed and add to turns queue
-        temp.Where(i => i.ReturnSpeed() > 0).OrderByDescending(i => i.ReturnSpeed()).ToList().ForEach(i => turns.Enqueue(i));
+            turns.Enqueue(actor);
+        }
         
+        
+        //Sort by speed
+        turns.ToList().Sort((a, b) => a.ReturnSpeed().CompareTo(b.ReturnSpeed()));
+
         OnNewTurn();
     }
 
@@ -267,6 +272,11 @@ public class CombatManager : MonoBehaviour
     public EnemyController[] GetEnemies()
     {
         return enemyControllers.ToArray();
+    }
+    
+    public CharacterController[] GetCharacters()
+    {
+        return characterControllers.ToArray();
     }
     
     public void DealDamage(int damage)

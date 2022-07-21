@@ -44,13 +44,13 @@ public class CharacterController : MonoBehaviour,ITurnable
     private Vector3 originalPosition;
 
     #region Start Functions
-    public void Start()
+    public void Awake()
     {
         health = character.maxHP;
         maxHealth = character.maxHP;
         mana = character.maxMP;
         originalPosition = transform.position;
-
+        speed = character.baseSpeed;
 
         currentAddition = character.additions[0];
         AddAnimations();
@@ -111,9 +111,9 @@ public class CharacterController : MonoBehaviour,ITurnable
         return speed;
     }
     
-    public void SetSpeed(int speed)
+    public void SetSpeed(int value)
     {
-        this.speed = speed;
+        this.speed = value;
     }
 
     #endregion

@@ -17,6 +17,7 @@ MonoBehaviour:
   maxHP: 100
   maxMP: 100
   baseDamage: 20
+  baseSpeed: 100
   additions:
   - additionName: Simple Combo
     comboList:

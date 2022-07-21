@@ -17,11 +17,9 @@ MonoBehaviour:
   maxHP: 100
   maxMP: 100
   baseDamage: 20
+  baseSpeed: 100
   additions:
   - additionName: Test Additon
-    animationList:
-    - animation: {fileID: 0}
-      animationSpeed: 0
-      spGain: 0
+    comboList: []
   - additionName: 
-    animationList: []
+    comboList: []
