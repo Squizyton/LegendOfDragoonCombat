@@ -303,12 +303,12 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1550178695}
+    m_TransformParent: {fileID: 305085865}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6a47f0bb35202d64384969dc21e71856,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6a47f0bb35202d64384969dc21e71856,
         type: 3}
@@ -1688,6 +1688,7 @@ Transform:
   - {fileID: 1317701229}
   - {fileID: 740703870}
   - {fileID: 2062116825}
+  - {fileID: 77731902}
   m_Father: {fileID: 513505512}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2407,7 +2408,7 @@ Transform:
   - {fileID: 305085865}
   - {fileID: 13369615}
   m_Father: {fileID: 1550178695}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &551866046
 GameObject:
@@ -2919,7 +2920,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1550178695}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &740703869
 PrefabInstance:
@@ -3066,7 +3067,7 @@ MonoBehaviour:
   info: {fileID: 0}
   currentCombo: 0
   currentDamage: 0
-  anim: {fileID: 0}
+  anim: {fileID: 740703873}
   animationPlayer: {fileID: 0}
   defendParticles: {fileID: 1317701228}
   currentAddition:
@@ -4119,7 +4120,7 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 7.764338, y: 14.846726, z: 14.766785}
+      - m_Value: {x: 7.7643433, y: 14.846725, z: 14.766785}
         m_Name: Transform_position
         m_Overridden: 1
       - m_Value: {x: -0, y: 71.63744, z: -0}
@@ -4549,7 +4550,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 77731902}
   - {fileID: 513505512}
   - {fileID: 681766682}
   m_Father: {fileID: 0}
