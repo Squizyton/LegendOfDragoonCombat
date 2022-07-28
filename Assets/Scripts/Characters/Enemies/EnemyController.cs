@@ -17,7 +17,9 @@ public class EnemyController : MonoBehaviour, ITurnable
     [SerializeField] private int damage;
     [SerializeField] private int defense;
     [SerializeField] private int speed;
-
+    [SerializeField]private Vector3 originalPosition;
+    
+    
     public void OnSpawn(EnemyInfo info)
     {
         enemyInfo = info;
@@ -26,7 +28,8 @@ public class EnemyController : MonoBehaviour, ITurnable
         damage = info.damage;
         defense = info.defense;
         speed = enemyInfo.baseSpeed;
-
+        originalPosition = transform.position;
+        
         Instantiate(enemyInfo.prefab, transform.position, transform.rotation, transform);
 
         anim = GetComponentInChildren<Animator>();
@@ -43,6 +46,8 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private void StartTurn()
     {
+        Debug.Log("Enemies turn");
+        
         var characters = CombatManager.instance.GetCharacters();
 
         var random = Random.Range(0, characters.Length);
@@ -55,6 +60,8 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private IEnumerator WaitToAttack(CharacterController target)
     {
+        Debug.Log("WaitToAttack");
+        
         yield return new WaitForSeconds(1f);
         var position = target.transform.position + (target.transform.forward + new Vector3(1, 0, 0));
 
@@ -67,14 +74,17 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private void AttackAnimation(CharacterController character)
     {
+        
+        Debug.Log("AttackAnimation");
+        
         anim.SetTrigger("attack");
 
         var damage1 = enemyInfo.damage * 1.2f;
 
         character.GetHit((int)damage1);
+
+        StartCoroutine(WaitToEndTurn());
     }
-    
-    
     
     IEnumerator WaitToEndTurn()
     {
@@ -84,6 +94,7 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     public void EndTurn()
     {
+        transform.DOMove(originalPosition, 1f);
         CombatManager.instance.NextTurn();
     }
 
