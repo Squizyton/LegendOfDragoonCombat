@@ -237,6 +237,9 @@ public class CombatManager : MonoBehaviour
         enemyControllers.Remove(enemy);
     }
     
+    /// <summary>
+    /// To Be called whenever an actor's turn has ended
+    /// </summary>
     public void NextTurn()
     {
         actionIndex = 0;

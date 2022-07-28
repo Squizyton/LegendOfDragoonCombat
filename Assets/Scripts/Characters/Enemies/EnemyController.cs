@@ -5,19 +5,19 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class EnemyController : MonoBehaviour,ITurnable
+public class EnemyController : MonoBehaviour, ITurnable
 {
     public EnemyInfo enemyInfo;
 
     [SerializeField] public Animator anim;
-    
-    
-    [Title("Stats")]
-    [SerializeField]private int health;
-    [SerializeField]private int maxHealth;
-    [SerializeField]private int damage;
+
+
+    [Title("Stats")] [SerializeField] private int health;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private int damage;
     [SerializeField] private int defense;
     [SerializeField] private int speed;
+
     public void OnSpawn(EnemyInfo info)
     {
         enemyInfo = info;
@@ -26,12 +26,12 @@ public class EnemyController : MonoBehaviour,ITurnable
         damage = info.damage;
         defense = info.defense;
         speed = enemyInfo.baseSpeed;
-        
-        Instantiate(enemyInfo.prefab, transform.position,transform.rotation,transform);
-        
+
+        Instantiate(enemyInfo.prefab, transform.position, transform.rotation, transform);
+
         anim = GetComponentInChildren<Animator>();
     }
-    
+
     public void TakeDamage(int damageDealt)
     {
         health -= damageDealt - defense;
@@ -44,29 +44,39 @@ public class EnemyController : MonoBehaviour,ITurnable
     private void StartTurn()
     {
         var characters = CombatManager.instance.GetCharacters();
-        
+
         var random = Random.Range(0, characters.Length);
-        
+
         var target = characters[random];
 
         StartCoroutine(WaitToAttack(target));
     }
-    
-    
-    IEnumerator WaitToAttack(CharacterController target)
+
+
+    private IEnumerator WaitToAttack(CharacterController target)
     {
         yield return new WaitForSeconds(1f);
-        transform.DOMove(target.transform.position,1f);
-        Attack(target);
+        var position = target.transform.position + (target.transform.forward + new Vector3(1, 0, 0));
+
+        transform.DOMove(position, 1f);
+        anim.SetTrigger("run");
+        yield return new WaitForSeconds(1f);
+        
+        AttackAnimation(target);
+    }
+
+    private void AttackAnimation(CharacterController character)
+    {
+        anim.SetTrigger("attack");
+
+        var damage1 = enemyInfo.damage * 1.2f;
+
+        character.GetHit((int)damage1);
     }
     
-    public void Attack(CharacterController character)
-    {
-
-        WaitToEndTurn();
-    }
-
-   IEnumerator WaitToEndTurn()
+    
+    
+    IEnumerator WaitToEndTurn()
     {
         yield return new WaitForSeconds(1f);
         EndTurn();
@@ -74,13 +84,14 @@ public class EnemyController : MonoBehaviour,ITurnable
 
     public void EndTurn()
     {
-        
+        CombatManager.instance.NextTurn();
     }
 
     public void HitAnimation()
     {
         anim.SetTrigger("Hit");
     }
+
     private void OnDeath()
     {
         //For now just destroy the object
@@ -89,28 +100,32 @@ public class EnemyController : MonoBehaviour,ITurnable
     }
 
 
-
     #region Getters and Setters
+
     public int GetHealth()
     {
         return health;
     }
+
     public void SetSpeed(int value)
-    { 
+    {
         speed = value;
     }
+
     public int ReturnSpeed()
     {
         return speed;
     }
+
     public int GetMaxHealth()
     {
         return maxHealth;
     }
+
     public void TakeTurn()
     {
         StartTurn();
     }
+
     #endregion
-} 
-   
+}

@@ -239,6 +239,9 @@ public class CharacterController : MonoBehaviour,ITurnable
     }
     public void GetHit(int damage)
     {
+        anim.SetTrigger("hit");
+        
+        
         health -= damage;
 
         if (health <= 0)
