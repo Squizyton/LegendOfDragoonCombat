@@ -217,7 +217,7 @@ public class CharacterController : MonoBehaviour,ITurnable
     public void Defend()
     {
         isDefending = true;
-        anim.SetTrigger("defend"); 
+        anim.SetBool("defend",isDefending); 
         defendParticles.Play();
     }
 
@@ -239,6 +239,8 @@ public class CharacterController : MonoBehaviour,ITurnable
     }
     public void GetHit(int damage)
     {
+        Debug.Log("Hit?");
+        
         anim.SetTrigger("hit");
         
         
@@ -252,7 +254,7 @@ public class CharacterController : MonoBehaviour,ITurnable
         onHealthChanged?.Invoke();
     }
     
-    public void StartTurn()
+    private void StartTurn()
     {
         //If any weird Coroutines is running, kill it
         StopAllCoroutines();
@@ -260,7 +262,7 @@ public class CharacterController : MonoBehaviour,ITurnable
         if (isDefending)
         {
             isDefending = false;
-            anim.SetTrigger("idle");
+            anim.SetBool("defend", isDefending);
         }
         info.BeginTurn();
     }
