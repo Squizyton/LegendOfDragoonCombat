@@ -31,6 +31,7 @@ public class CharacterInfo : MonoBehaviour
   public void InjectCharacterInfo(CharacterController character)
   {
     nameText.text = character.name;
+    currentHP = character.ReturnHealth();
     currentHPText.text = character.ReturnHealth().ToString();
     maxHPText.text = character.ReturnMaxHealth().ToString();
     currentMPText.text = character.ReturnMana().ToString();
@@ -41,6 +42,7 @@ public class CharacterInfo : MonoBehaviour
   public void UpdateHP(CharacterController character)
   {
     var newHealth = character.ReturnHealth();
+    Debug.Log(newHealth);
     StartCoroutine(RemoveHealthCoroutine(newHealth));
   }
 
@@ -48,7 +50,7 @@ public class CharacterInfo : MonoBehaviour
   {
     while (currentHP != newHealth)
     {
-      yield return new WaitForSeconds(.2f);
+      yield return new WaitForSeconds(.12f);
       currentHP--;
       currentHPText.text = currentHP.ToString();
     }
