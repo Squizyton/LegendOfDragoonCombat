@@ -44,11 +44,7 @@ public class CombatManager : MonoBehaviour
         }
         foreach(var enemy in enemyControllers)
             baseActors.Add(enemy);
-        
-        
-        Debug.Log("Base Actors: " + baseActors.Count);
-        
-       
+
         SpawnEnemies();
         ShuffleNewTurns();
         
@@ -80,9 +76,6 @@ public class CombatManager : MonoBehaviour
         {
             
             currentActor = turns.Dequeue();
-
-            Debug.Log(currentActor + "speed: " + currentActor.ReturnSpeed());
-            
             currentActor.TakeTurn();
             currentState = CombatState.SelectingAction;
         }
@@ -112,12 +105,20 @@ public class CombatManager : MonoBehaviour
                     break;
             }
 
+            
+           temp.Add(actor);
+            
+           
+        }
+
+        
+        //Order by highest speed first
+        temp.Sort((x, y) => y.ReturnSpeed().CompareTo(x.ReturnSpeed()));
+        
+        foreach (var actor in temp)
+        {
             turns.Enqueue(actor);
         }
-        
-        
-        //Sort by speed
-        turns.ToList().Sort((a, b) => a.ReturnSpeed().CompareTo(b.ReturnSpeed()));
 
         OnNewTurn();
     }
@@ -242,18 +243,29 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     public void NextTurn()
     {
-        actionIndex = 0;
-        enemyIndex = 0;
-        CombatUIManager.instance.TurnOnCharacterUI();
-        CombatUIManager.instance.MoveCircle(actionIndex);
-        //Requeue the character
-        turns.Enqueue(currentActor);
-        //End the turn
-        currentActor.EndTurn();
+        Debug.Log("Called");
+        
         //Get the next character
         currentActor = turns.Dequeue();
+       
+        
+        switch (currentActor)
+        {
+            case CharacterController:
+                actionIndex = 0;
+                enemyIndex = 0;
+                CombatUIManager.instance.TurnOnCharacterUI();
+                CombatUIManager.instance.MoveCircle(actionIndex);
+                currentState = CombatState.SelectingAction;
+                break;
+            case EnemyController:
+                Debug.Log("Turn off UI");
+                CombatUIManager.instance.TurnOffCharacterUI();
+                break;
+        }
+        
+        
         currentActor.TakeTurn();
-        currentState = CombatState.SelectingAction;
     }
 
     #endregion
