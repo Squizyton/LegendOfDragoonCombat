@@ -50,6 +50,12 @@ public class CombatUIManager : MonoBehaviour
         healthTriangle.transform.position = Vector3.zero;
         enemyBox.gameObject.SetActive(false);
     }
+    public void TurnOffCharacterUI()
+    {
+        characterbox.SetActive(false);
+        actionBar.SetActive(false);
+        enemyBox.gameObject.SetActive(false);
+    }
 
     public void TurnOnAttackUI()
     {
