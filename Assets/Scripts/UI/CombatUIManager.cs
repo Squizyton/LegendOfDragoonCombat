@@ -52,7 +52,6 @@ public class CombatUIManager : MonoBehaviour
     }
     public void TurnOffCharacterUI()
     {
-        characterbox.SetActive(false);
         actionBar.SetActive(false);
         enemyBox.gameObject.SetActive(false);
     }
