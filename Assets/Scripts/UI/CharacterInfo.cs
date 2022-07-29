@@ -41,6 +41,7 @@ public class CharacterInfo : MonoBehaviour
 
   public void UpdateHP(CharacterController character)
   {
+    
     var newHealth = character.ReturnHealth();
     Debug.Log(newHealth);
     StartCoroutine(RemoveHealthCoroutine(newHealth));

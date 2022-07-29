@@ -3462,6 +3462,7 @@ MonoBehaviour:
   damage: 0
   defense: 0
   speed: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3737,6 +3738,7 @@ MonoBehaviour:
   damage: 0
   defense: 0
   speed: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1048802116
 GameObject:
   m_ObjectHideFlags: 0
@@ -4446,6 +4448,7 @@ MonoBehaviour:
   damage: 0
   defense: 0
   speed: 0
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1543300174
 GameObject:
   m_ObjectHideFlags: 0
