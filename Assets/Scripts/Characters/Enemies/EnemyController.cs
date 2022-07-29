@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour, ITurnable
     public void EndTurn()
     {
         transform.DOMove(originalPosition, 1f);
-        CombatManager.instance.NextTurn();
+        CombatManager.instance.OnNewTurn();
     }
 
     public void HitAnimation()
