@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -111,7 +112,7 @@ public class CombatManager : MonoBehaviour
         
         //Order by highest speed first
         temp.Sort((x, y) => y.ReturnSpeed().CompareTo(x.ReturnSpeed()));
-        
+
         foreach (var actor in temp)
         {
             turns.Enqueue(actor);
@@ -240,8 +241,7 @@ public class CombatManager : MonoBehaviour
     /// </summary>
     private void NextTurn()
     {
-        Debug.Log("Called");
-        
+
         //Get the next character
         currentActor = turns.Dequeue();
        
@@ -256,7 +256,6 @@ public class CombatManager : MonoBehaviour
                 currentState = CombatState.SelectingAction;
                 break;
             case EnemyController:
-                Debug.Log("Turn off UI");
                 CombatUIManager.instance.TurnOffCharacterUI();
                 break;
         }
