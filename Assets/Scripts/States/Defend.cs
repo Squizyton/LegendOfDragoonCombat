@@ -7,6 +7,6 @@ public class Defend : IState
     public void Action()
     {
         CombatManager.instance.ReturnCurrentCharacter().Defend();
-        CombatManager.instance.NextTurn();
+        CombatManager.instance.OnNewTurn();
     }
 }
