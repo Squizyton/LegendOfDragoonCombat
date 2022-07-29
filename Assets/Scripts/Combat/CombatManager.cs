@@ -70,14 +70,11 @@ public class CombatManager : MonoBehaviour
         return currentActor as CharacterController;
     }
     
-    private void OnNewTurn()
+    public void OnNewTurn()
     {
         if (turns.Count > 0)
         {
-            
-            currentActor = turns.Dequeue();
-            currentActor.TakeTurn();
-            currentState = CombatState.SelectingAction;
+             NextTurn();
         }
         else
         {
@@ -241,7 +238,7 @@ public class CombatManager : MonoBehaviour
     /// <summary>
     /// To Be called whenever an actor's turn has ended
     /// </summary>
-    public void NextTurn()
+    private void NextTurn()
     {
         Debug.Log("Called");
         
