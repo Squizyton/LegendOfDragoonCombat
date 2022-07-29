@@ -192,7 +192,7 @@ public class CharacterController : MonoBehaviour,ITurnable
         //End the combo chain and reset the combo
         currentCombo = 0;
         transform.DOMove(originalPosition, .4f);
-        CombatManager.instance.NextTurn();
+        CombatManager.instance.OnNewTurn();
         anim.enabled = true;
     }
     
