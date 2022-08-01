@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Characters.Player;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -28,20 +29,20 @@ public class CharacterInfo : MonoBehaviour
   private int currentHP;
 
   
-  public void InjectCharacterInfo(CharacterController character)
+  public void InjectCharacterInfo(PlayerController player)
   {
-    nameText.text = character.name;
-    currentHP = character.ReturnHealth();
-    currentHPText.text = character.ReturnHealth().ToString();
-    maxHPText.text = character.ReturnMaxHealth().ToString();
-    currentMPText.text = character.ReturnMana().ToString();
-    maxMPText.text = character.ReturnMaxMana().ToString();
-    characterIcon.sprite = character.character.playerIcon;
+    nameText.text = player.name;
+    currentHP = player.ReturnHealth();
+    currentHPText.text = player.ReturnHealth().ToString();
+    maxHPText.text = player.ReturnMaxHealth().ToString();
+    currentMPText.text = player.ReturnMana().ToString();
+    maxMPText.text = player.ReturnMaxMana().ToString();
+    characterIcon.sprite = player.character.playerIcon;
   }
 
-  public void UpdateHP(CharacterController character)
+  public void UpdateHP(PlayerController player)
   {
-    var newHealth = character.ReturnHealth();
+    var newHealth = player.ReturnHealth();
     StartCoroutine(RemoveHealthCoroutine(newHealth));
   }
 

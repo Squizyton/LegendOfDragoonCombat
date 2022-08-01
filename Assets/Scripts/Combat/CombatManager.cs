@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Characters;
+using Characters.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -22,7 +23,7 @@ public class CombatManager : MonoBehaviour
     private List<ITurnable> baseActors;
 
     [Title("Character Controllers")] [SerializeField]
-    private List<CharacterController> characterControllers;
+    private List<PlayerController> characterControllers;
 
 
     [Title("Enemies")] [SerializeField] private List<EnemyController> enemyControllers;
@@ -73,9 +74,9 @@ public class CombatManager : MonoBehaviour
 
     #region Player Turn
 
-    public CharacterController ReturnCurrentCharacter()
+    public PlayerController ReturnCurrentCharacter()
     {
-        return currentActor as CharacterController;
+        return currentActor as PlayerController;
     }
 
     private void Update()
@@ -199,7 +200,7 @@ public class CombatManager : MonoBehaviour
         {
             switch (actor)
             {
-                case CharacterController character:
+                case PlayerController character:
                     character.SetSpeed(character.ReturnSpeed() * Random.Range(1, 3));
                     break;
                 case EnemyController enemy:
@@ -246,7 +247,7 @@ public class CombatManager : MonoBehaviour
 
         switch (currentActor)
         {
-            case CharacterController:
+            case PlayerController:
                 enemyIndex = 0;
                 SwitchAction(actionIndex = 0);
                 CombatUIManager.instance.TurnOnCharacterUI();
@@ -284,7 +285,7 @@ public class CombatManager : MonoBehaviour
         return enemyControllers.ToArray();
     }
 
-    public CharacterController[] GetCharacters()
+    public PlayerController[] GetCharacters()
     {
         return characterControllers.ToArray();
     }

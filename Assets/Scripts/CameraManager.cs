@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Characters.Player;
 using Cinemachine;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class CameraManager : MonoBehaviour
    }
 
    //Zoom in on Character Attacking
-   public void ZoomInOnCharacter(CharacterController player)
+   public void ZoomInOnCharacter(PlayerController player)
    {
       battleCamera.Priority = 50;
 

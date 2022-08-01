@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Characters;
+using Characters.Player;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -59,7 +60,7 @@ public class EnemyController : MonoBehaviour, ITurnable
     }
 
 
-    private IEnumerator WaitToAttack(CharacterController target)
+    private IEnumerator WaitToAttack(PlayerController target)
     {
         Debug.Log("WaitToAttack");
         
@@ -73,7 +74,7 @@ public class EnemyController : MonoBehaviour, ITurnable
         AttackAnimation(target);
     }
 
-    private void AttackAnimation(CharacterController character)
+    private void AttackAnimation(PlayerController player)
     {
         
         Debug.Log("AttackAnimation");
@@ -82,7 +83,7 @@ public class EnemyController : MonoBehaviour, ITurnable
 
         var damage1 = enemyInfo.damage * 1.2f;
 
-        character.GetHit((int)damage1);
+        player.GetHit((int)damage1);
 
         StartCoroutine(WaitToEndTurn());
     }

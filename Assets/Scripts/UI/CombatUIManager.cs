@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Characters.Player;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -36,11 +37,11 @@ public class CombatUIManager : MonoBehaviour
     private void Awake() => instance = this;
 
 
-    public void CreateCharacterInfo(CharacterController character)
+    public void CreateCharacterInfo(PlayerController player)
     {
         var info = Instantiate(infoPrefab, characterDetailsContainer);
-        info.InjectCharacterInfo(character);
-        character.InjectInfo(info);
+        info.InjectCharacterInfo(player);
+        player.InjectInfo(info);
     }
 
     public void TurnOnCharacterUI()
