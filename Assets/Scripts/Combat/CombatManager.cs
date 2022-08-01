@@ -70,8 +70,7 @@ public class CombatManager : MonoBehaviour
     }
 
     #endregion
-
-
+    
     #region Player Turn
 
     public PlayerController ReturnCurrentCharacter()
@@ -99,6 +98,12 @@ public class CombatManager : MonoBehaviour
                 break;
 
             case CombatState.SelectingTarget:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    CombatUIManager.instance.TurnOnCharacterUI();
+                    currentState = CombatState.SelectingAction;
+                }
+
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                     SwitchEnemy(-1);
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
