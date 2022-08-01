@@ -18,9 +18,9 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private ITurnable currentActor;
     private IState[] states;
     private IState currentStateInstance;
-    
+
     private List<ITurnable> baseActors;
-    
+
     [Title("Character Controllers")] [SerializeField]
     private List<CharacterController> characterControllers;
 
@@ -30,25 +30,30 @@ public class CombatManager : MonoBehaviour
     //TODO: Move this to a separate class
     public EnemyInfo[] availableEnemies;
 
+
+    [Title("UI")] [SerializeField] private CombatUIManager combatUi;
+
+    #region Start Functions
+
     private void Start()
     {
         instance = this;
         turns = new Queue<ITurnable>();
         baseActors = new List<ITurnable>();
         InitializeStates();
-        
+
         foreach (var character in characterControllers)
         {
             CombatUIManager.instance.CreateCharacterInfo(character);
             character.ReturnInfo().EndTurn();
             baseActors.Add(character);
         }
-        foreach(var enemy in enemyControllers)
+
+        foreach (var enemy in enemyControllers)
             baseActors.Add(enemy);
 
         SpawnEnemies();
         ShuffleNewTurns();
-        
     }
 
     private void InitializeStates()
@@ -63,62 +68,14 @@ public class CombatManager : MonoBehaviour
         currentStateInstance = states[0];
     }
 
+    #endregion
+
 
     #region Player Turn
 
     public CharacterController ReturnCurrentCharacter()
     {
         return currentActor as CharacterController;
-    }
-    
-    public void OnNewTurn()
-    {
-        if (turns.Count > 0)
-        {
-             NextTurn();
-        }
-        else
-        {
-            ShuffleNewTurns();
-        }
-    }
-
-
-    /// <summary>
-    /// I'm breaking things
-    /// </summary>
-    private void ShuffleNewTurns()
-    {
-        var temp= new List<ITurnable>();
-
-        foreach (var actor in baseActors)
-        {
-            switch (actor)
-            {
-                case CharacterController character:
-                    character.SetSpeed(character.ReturnSpeed() * Random.Range(1, 3));
-                    break;
-                case EnemyController enemy:
-                    enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1, 3));
-                    break;
-            }
-
-            
-           temp.Add(actor);
-            
-           
-        }
-
-        
-        //Order by highest speed first
-        temp.Sort((x, y) => y.ReturnSpeed().CompareTo(x.ReturnSpeed()));
-
-        foreach (var actor in temp)
-        {
-            turns.Enqueue(actor);
-        }
-
-        OnNewTurn();
     }
 
     private void Update()
@@ -148,7 +105,6 @@ public class CombatManager : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-               
                     ReturnCurrentCharacter().StartAttack(enemyControllers[enemyIndex]);
                     currentState = CombatState.Nothing;
                 }
@@ -188,25 +144,10 @@ public class CombatManager : MonoBehaviour
         }
 
         currentStateInstance = states[actionIndex];
-      
+
         //Move the cursor to the selected action
         CombatUIManager.instance.MoveCircle(actionIndex);
-      
     }
-
-
-    private void DoAction()
-    {
-        try
-        {
-            currentStateInstance.Action();
-        }
-        catch (Exception e)
-        {
-            Debug.LogError(e);
-        }
-    }
-
 
     private void SwitchEnemy(float direction)
     {
@@ -223,29 +164,86 @@ public class CombatManager : MonoBehaviour
         enemyIndex = enemyIndex switch
         {
             > 2 => 0,
-            < 0 => enemyControllers.Count -1,
+            < 0 => enemyControllers.Count - 1,
             _ => enemyIndex
         };
 
         CombatUIManager.instance.UpdateEnemySelection(enemyControllers[enemyIndex]);
     }
 
-    
-    public void RemoveEnemy(EnemyController enemy)
+
+    private void DoAction()
     {
-        enemyControllers.Remove(enemy);
+        try
+        {
+            currentStateInstance.Action();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+        }
     }
+
+    #endregion
     
+    #region Turn Handlers
+
+    /// <summary>
+    /// I'm breaking things
+    /// </summary>
+    private void ShuffleNewTurns()
+    {
+        var temp = new List<ITurnable>();
+
+        foreach (var actor in baseActors)
+        {
+            switch (actor)
+            {
+                case CharacterController character:
+                    character.SetSpeed(character.ReturnSpeed() * Random.Range(1, 3));
+                    break;
+                case EnemyController enemy:
+                    enemy.SetSpeed(enemy.ReturnSpeed() * Random.Range(1, 3));
+                    break;
+            }
+
+
+            temp.Add(actor);
+        }
+
+
+        //Order by highest speed first
+        temp.Sort((x, y) => y.ReturnSpeed().CompareTo(x.ReturnSpeed()));
+
+        foreach (var actor in temp)
+        {
+            turns.Enqueue(actor);
+        }
+
+        OnNewTurn();
+    }
+
     /// <summary>
     /// To Be called whenever an actor's turn has ended
     /// </summary>
+    public void OnNewTurn()
+    {
+        if (turns.Count > 0)
+        {
+            NextTurn();
+        }
+        else
+        {
+            ShuffleNewTurns();
+        }
+    }
+    
     private void NextTurn()
     {
-
         //Get the next character
         currentActor = turns.Dequeue();
-       
-        
+
+
         switch (currentActor)
         {
             case CharacterController:
@@ -261,12 +259,10 @@ public class CombatManager : MonoBehaviour
                 CombatUIManager.instance.TurnOffCharacterUI();
                 break;
         }
-        
-        
+
+
         currentActor.TakeTurn();
     }
-
-    #endregion
 
 
     public void CanAttack()
@@ -276,22 +272,23 @@ public class CombatManager : MonoBehaviour
 
     public void CantAttack()
     {
-       ReturnCurrentCharacter().CantTriggerAttack();
+        ReturnCurrentCharacter().CantTriggerAttack();
     }
+
+    #endregion
 
     #region Enemies
 
-    
     public EnemyController[] GetEnemies()
     {
         return enemyControllers.ToArray();
     }
-    
+
     public CharacterController[] GetCharacters()
     {
         return characterControllers.ToArray();
     }
-    
+
     public void DealDamage(int damage)
     {
         enemyControllers[enemyIndex].TakeDamage(damage);
@@ -301,13 +298,18 @@ public class CombatManager : MonoBehaviour
     {
         enemyControllers[enemyIndex].HitAnimation();
     }
-    
+
     private void SpawnEnemies()
     {
         foreach (var enemy in enemyControllers)
         {
             enemy.OnSpawn(availableEnemies[0]);
         }
+    }
+
+    public void RemoveEnemy(EnemyController enemy)
+    {
+        enemyControllers.Remove(enemy);
     }
 
     #endregion
