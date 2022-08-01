@@ -260,7 +260,6 @@ public class CombatManager : MonoBehaviour
                 currentState = CombatState.SelectingAction;
                 break;
             case EnemyController:
-                Debug.Log("Blop");
                 currentState = CombatState.Nothing;
                 CombatUIManager.instance.TurnOffCharacterUI();
                 break;

@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
 
    [SerializeField]private List<CinemachineVirtualCamera> cameras;
    [SerializeField] private CinemachineVirtualCamera currentCamera;
-   [SerializeField]private CinemachineVirtualCamera battleCamera;
+   public CinemachineVirtualCamera battleCamera;
    
    [Header("Camera Settings")]
    [SerializeField]private Vector3 battleCameraOffset;

@@ -263,11 +263,8 @@ namespace Characters.Player
     
         public void GetHit(int damage)
         {
-            Debug.Log("Hit?");
-        
             anim.SetTrigger("hit");
-        
-        
+            
             health -= damage;
 
             if (health <= 0)

@@ -48,8 +48,7 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private void StartTurn()
     {
-        Debug.Log("Enemies turn");
-        
+
         var characters = CombatManager.instance.GetCharacters();
 
         var random = Random.Range(0, characters.Length);
@@ -62,7 +61,7 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private IEnumerator WaitToAttack(PlayerController target)
     {
-        Debug.Log("WaitToAttack");
+     
         
         yield return new WaitForSeconds(1f);
         var position = target.transform.position + (target.transform.forward + new Vector3(1, 0, 0));
@@ -77,7 +76,7 @@ public class EnemyController : MonoBehaviour, ITurnable
     private void AttackAnimation(PlayerController player)
     {
         
-        Debug.Log("AttackAnimation");
+      
         
         anim.SetTrigger("attack");
 
