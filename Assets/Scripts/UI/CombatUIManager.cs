@@ -16,24 +16,26 @@ public class CombatUIManager : MonoBehaviour
     public GameObject actionBar;
     public GameObject characterbox;
     public GameObject enemyBox;
+    public GameObject damageNumber;
     public Transform characterDetailsContainer;
     public CharacterInfo infoPrefab;
 
     [SerializeField] private Transform[] actionPictures;
     [SerializeField] private Transform actionCircle;
-    
+
     //TODO: This could honestly be an array, but for now seperate variables
-    [Title("Health Colors")]
-    [SerializeField]private Color moreThanHalfHealthColor;
-    [SerializeField]private Color lessThanHalfHealthColor;
-    [SerializeField]private Color quarterHealthColor;
+    [Title("Health Colors")] [SerializeField]
+    private Color moreThanHalfHealthColor;
+
+    [SerializeField] private Color lessThanHalfHealthColor;
+    [SerializeField] private Color quarterHealthColor;
 
     [SerializeField] public Transform healthTriangle;
 
 
     [Title("Text Objects")] [SerializeField]
     private TextMeshProUGUI enemyName;
-    
+
     private void Awake() => instance = this;
 
 
@@ -44,6 +46,8 @@ public class CombatUIManager : MonoBehaviour
         player.InjectInfo(info);
     }
 
+    #region Active Status's
+
     public void TurnOnCharacterUI()
     {
         characterbox.SetActive(true);
@@ -51,10 +55,17 @@ public class CombatUIManager : MonoBehaviour
         healthTriangle.transform.position = Vector3.zero;
         enemyBox.gameObject.SetActive(false);
     }
+
     public void TurnOffCharacterUI()
     {
         actionBar.SetActive(false);
         enemyBox.gameObject.SetActive(false);
+    }
+
+    public void TurnOffAttackUI()
+    {
+        enemyBox.gameObject.SetActive(false);
+        healthTriangle.transform.position = Vector3.zero;
     }
 
     public void TurnOnAttackUI()
@@ -66,12 +77,15 @@ public class CombatUIManager : MonoBehaviour
         characterbox.SetActive(false);
     }
 
+    #endregion
+
+
     public void UpdateEnemySelection(EnemyController enemy)
     {
         enemyName.SetText(enemy.enemyInfo.enemyName);
 
         var healthColor = new Color();
-        
+
         //Get The health percentage of the enemy
         var healthPercentage = (enemy.GetHealth() * 100) / enemy.GetMaxHealth();
 
@@ -83,7 +97,7 @@ public class CombatUIManager : MonoBehaviour
         };
 
         healthTriangle.GetComponentInChildren<Image>().color = healthColor;
-        
+
         healthTriangle.DOMove(enemy.transform.position + new Vector3(0, 3f, 0), 0.15f);
     }
 
@@ -94,15 +108,20 @@ public class CombatUIManager : MonoBehaviour
 
     public void StartAdditionTimer(float value)
     {
-       
         additionTimerUI.GetComponent<CanvasGroup>().alpha = 1;
         additionTimerUI.GetComponent<Animator>().SetTrigger("Start");
         additionTimerUI.GetComponent<Animator>().speed = value;
     }
-    
-    public void TurnOffAttackUI()
+
+
+    public void SpawnDamageNumber(Transform transform, Color color,int damage)
     {
-        enemyBox.gameObject.SetActive(false);
-        healthTriangle.transform.position = Vector3.zero;
+        var number = Instantiate(damageNumber);
+        number.transform.position = transform.position;
+        number.transform.LookAt(CameraManager.instance.battleCamera.transform.position);
+        var text = number.GetComponentInChildren<TextMeshProUGUI>();
+        text.color = color;
+        text.SetText(damage.ToString());
+        number.GetComponent<Rigidbody>().AddForce(number.transform.up * 10, ForceMode.Impulse);
     }
 }
