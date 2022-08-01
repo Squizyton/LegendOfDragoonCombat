@@ -271,6 +271,7 @@ public class CharacterController : MonoBehaviour,ITurnable
     public void EndTurn()
     {
         info.EndTurn();
+        CombatManager.instance.OnNewTurn();
     }
 
     public void TakeTurn()

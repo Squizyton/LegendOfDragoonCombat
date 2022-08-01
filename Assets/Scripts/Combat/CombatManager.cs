@@ -249,13 +249,15 @@ public class CombatManager : MonoBehaviour
         switch (currentActor)
         {
             case CharacterController:
-                actionIndex = 0;
                 enemyIndex = 0;
+                SwitchAction(actionIndex = 0);
                 CombatUIManager.instance.TurnOnCharacterUI();
                 CombatUIManager.instance.MoveCircle(actionIndex);
                 currentState = CombatState.SelectingAction;
                 break;
             case EnemyController:
+                Debug.Log("Blop");
+                currentState = CombatState.Nothing;
                 CombatUIManager.instance.TurnOffCharacterUI();
                 break;
         }
