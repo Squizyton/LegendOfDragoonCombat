@@ -40,6 +40,7 @@ public class EnemyController : MonoBehaviour, ITurnable
     public void TakeDamage(int damageDealt)
     {
         health -= damageDealt - defense;
+        CombatUIManager.instance.SpawnDamageNumber(this.transform,Color.yellow,damageDealt - defense);
         if (health <= 0)
         {
             OnDeath();
@@ -75,9 +76,6 @@ public class EnemyController : MonoBehaviour, ITurnable
 
     private void AttackAnimation(PlayerController player)
     {
-        
-      
-        
         anim.SetTrigger("attack");
 
         var damage1 = enemyInfo.damage * 1.2f;

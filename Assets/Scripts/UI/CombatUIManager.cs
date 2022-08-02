@@ -13,8 +13,8 @@ public class CombatUIManager : MonoBehaviour
     public static CombatUIManager instance;
 
     [Title("GameObjects")] public GameObject additionTimerUI;
-    public GameObject actionBar;
-    public GameObject characterbox;
+    public CanvasGroup actionBar;
+    public CanvasGroup characterbox;
     public GameObject enemyBox;
     public GameObject damageNumber;
     public Transform characterDetailsContainer;
@@ -50,15 +50,15 @@ public class CombatUIManager : MonoBehaviour
 
     public void TurnOnCharacterUI()
     {
-        characterbox.SetActive(true);
-        actionBar.SetActive(true);
+        characterbox.alpha = 1;
+        actionBar.alpha = 1;
         healthTriangle.transform.position = Vector3.zero;
         enemyBox.gameObject.SetActive(false);
     }
 
     public void TurnOffCharacterUI()
     {
-        actionBar.SetActive(false);
+        actionBar.alpha = 0;
         enemyBox.gameObject.SetActive(false);
     }
 
@@ -70,11 +70,11 @@ public class CombatUIManager : MonoBehaviour
 
     public void TurnOnAttackUI()
     {
-        actionBar.SetActive(false);
+        actionBar.alpha = 0;
         //For some odd reason this just..doesn't work if its disabled then re enabled...so we are going to move it
         healthTriangle.transform.position = Vector3.zero;
         enemyBox.gameObject.SetActive(true);
-        characterbox.SetActive(false);
+        characterbox.alpha = 0;
     }
 
     #endregion
@@ -114,12 +114,13 @@ public class CombatUIManager : MonoBehaviour
     }
 
 
+    //Change this to Object Pooling later on
     public void SpawnDamageNumber(Transform transform, Color color,int damage)
     {
         var number = Instantiate(damageNumber);
         number.transform.position = transform.position;
-        number.transform.LookAt(CameraManager.instance.battleCamera.transform.position);
         var text = number.GetComponentInChildren<TextMeshProUGUI>();
+        number.GetComponent<LookAtTarget>().Intialize(CameraManager.instance.GetCurrentCamera().transform);
         text.color = color;
         text.SetText(damage.ToString());
         number.GetComponent<Rigidbody>().AddForce(number.transform.up * 10, ForceMode.Impulse);

@@ -206,6 +206,7 @@ namespace Characters.Player
             CameraManager.instance.CombatEnd();
             //Deal damage
             CombatManager.instance.DealDamage(CalculateDamage());
+            
             //End the combo chain and reset the combo
             currentCombo = 0;
             transform.DOMove(originalPosition, .4f);
@@ -261,11 +262,20 @@ namespace Characters.Player
             defendParticles.Play();
         }
     
-        public void GetHit(int damage)
+        public void GetHit(int damageTaken)
         {
             anim.SetTrigger("hit");
             
-            health -= damage;
+            if (isDefending)
+            {
+                damageTaken /= 2;
+            }
+            
+            CombatUIManager.instance.SpawnDamageNumber(this.transform,Color.red,damageTaken);
+            
+            health -= damageTaken;
+
+            
 
             if (health <= 0)
             {

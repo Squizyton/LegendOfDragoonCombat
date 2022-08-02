@@ -20,7 +20,12 @@ public class CameraManager : MonoBehaviour
       instance = this;
    }
 
-
+public CinemachineVirtualCamera GetCurrentCamera()
+   {
+      return currentCamera;
+   }
+   
+   
    public void ChangeEnvironmentCamera()
    {
       currentCamera.Priority = 0;
