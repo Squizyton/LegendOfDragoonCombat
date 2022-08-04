@@ -115,14 +115,14 @@ public class CombatUIManager : MonoBehaviour
 
 
     //Change this to Object Pooling later on
-    public void SpawnDamageNumber(Transform transform, Color color,int damage)
+    public void SpawnDamageNumber(Transform target, Color color,int damage)
     {
         var number = Instantiate(damageNumber);
-        number.transform.position = transform.position;
+        number.transform.position = target.position;
         var text = number.GetComponentInChildren<TextMeshProUGUI>();
         number.GetComponent<LookAtTarget>().Intialize(CameraManager.instance.GetCurrentCamera().transform);
         text.color = color;
         text.SetText(damage.ToString());
-        number.GetComponent<Rigidbody>().AddForce(number.transform.up * 10, ForceMode.Impulse);
+        number.GetComponent<Rigidbody>().AddForce(number.transform.up * 6, ForceMode.Impulse);
     }
 }

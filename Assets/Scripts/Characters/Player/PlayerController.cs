@@ -181,8 +181,10 @@ namespace Characters.Player
 
         /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime(that I know of currently)...while Animation does.
         /// Don't do this. It's a bad idea. Just use Unity's Animator.
-        /// So AS OF RIGHT NOW, I'm just using Animation.Play() to play the animation. I'll fix this later, if I can come up with a better solution.
         /// 
+        ///08/02/2022:
+        /// A better solution to completely fix this is just to change the animator attached. Then have several number triggers. And then call the corresponding number.
+        /// TODO: implement this
         private void HitCombo()
         {
             //If the combo is greater than the amount of animations, end the combo
