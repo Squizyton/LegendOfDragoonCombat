@@ -19,7 +19,20 @@ MonoBehaviour:
   baseDamage: 20
   baseSpeed: 83
   additions:
-  - additionName: Test Additon
-    comboList: []
-  - additionName: 
-    comboList: []
+  - additionName: Sword Strike
+    comboList:
+    - animation: {fileID: 7400000, guid: 2ecbe22a6d5eca14188e49a53ecf9775, type: 2}
+      animationName: JumpSlash
+      animationSpeed: 1
+      spGain: 0
+      damageMultiplier: 1.2
+    - animation: {fileID: 7400000, guid: cf9313ef90cea0742b248975eb8542c3, type: 2}
+      animationName: DownSlash
+      animationSpeed: 1
+      spGain: 0
+      damageMultiplier: 1.3
+    - animation: {fileID: 7400000, guid: 99eb905ab953c5d4fb9d16798283b6c3, type: 2}
+      animationName: UpSlash
+      animationSpeed: 1
+      spGain: 0
+      damageMultiplier: 1.4

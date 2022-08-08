@@ -166,6 +166,7 @@ namespace Characters.Player
         
             Debug.Log("Not hit on time");
             EndCombo();
+            CombatManager.instance.OnNewTurn();
         }
 
         public void Update()
@@ -177,6 +178,7 @@ namespace Characters.Player
 
             hitOnTime = true;
             HitCombo();
+            CombatManager.instance.OnNewTurn();
         }
 
         /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime(that I know of currently)...while Animation does.
@@ -205,14 +207,11 @@ namespace Characters.Player
         private void EndCombo()
         {
             transform.DOKill();
-            CameraManager.instance.CombatEnd();
             //Deal damage
             CombatManager.instance.DealDamage(CalculateDamage());
-            
+       
             //End the combo chain and reset the combo
             currentCombo = 0;
-            transform.DOMove(originalPosition, .4f);
-            CombatManager.instance.OnNewTurn();
             anim.enabled = true;
         }
     
@@ -232,11 +231,13 @@ namespace Characters.Player
             return (int)damage;
         }
     
+        
+        //TODO: Cache WaitForSeconds so we aren't allocating memory every time we call it.
     
         private IEnumerator WaitForAnimation(float time)
         {
             yield return new WaitForSeconds(time);
-            CombatManager.instance.HitEnemy();
+           
             CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
         }
 
@@ -244,9 +245,11 @@ namespace Characters.Player
         private IEnumerator EndComboDelay(float animationTime)
         {
             yield return new WaitForSeconds(animationTime);
-            CombatManager.instance.HitEnemy();
-            yield return new WaitForSeconds(2f);
             EndCombo();
+            yield return new WaitForSeconds(2f);
+            CameraManager.instance.CombatEnd();
+            CombatManager.instance.OnNewTurn();
+            transform.DOMove(originalPosition, .4f);
         }
     
         #endregion

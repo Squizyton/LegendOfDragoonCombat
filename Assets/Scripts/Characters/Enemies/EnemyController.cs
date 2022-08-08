@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour, ITurnable
     public void TakeDamage(int damageDealt)
     {
         health -= damageDealt - defense;
-        CombatUIManager.instance.SpawnDamageNumber(this.transform,Color.yellow,damageDealt - defense);
+        CombatUIManager.instance.SpawnDamageNumber(transform,Color.yellow,damageDealt - defense);
         if (health <= 0)
         {
             OnDeath();

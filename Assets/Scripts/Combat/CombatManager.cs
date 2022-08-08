@@ -15,8 +15,9 @@ public class CombatManager : MonoBehaviour
     public CombatState currentState;
     [SerializeField] private int actionIndex;
     [SerializeField] private int enemyIndex;
-    [SerializeField] private Queue<ITurnable> turns;
-    [SerializeField] private ITurnable currentActor;
+    
+    private Queue<ITurnable> turns;
+    private ITurnable currentActor;
     private IState[] states;
     private IState currentStateInstance;
 
