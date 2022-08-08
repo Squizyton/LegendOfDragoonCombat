@@ -19,6 +19,9 @@ public class BaseCharacter : ScriptableObject
    public int baseDamage;
    public int baseSpeed;
    
+   [Space,Title("Character Animation Override")]
+   public AnimatorOverrideController animatorOverrideController;
+   
    [Space]
    [Title("Additions"),ListDrawerSettings(NumberOfItemsPerPage = 1)]
    public List<Addition>additions;

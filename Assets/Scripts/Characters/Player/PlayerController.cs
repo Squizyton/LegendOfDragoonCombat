@@ -297,10 +297,6 @@ namespace Characters.Player
             StartTurn();
         }
 
-
-        void TestAdd()
-        {
-            anim.runtimeAnimatorController.
-        }
+        
     }
 }
