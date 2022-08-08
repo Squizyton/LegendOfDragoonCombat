@@ -56,6 +56,8 @@ namespace Characters.Player
 
             currentAddition = character.additions[0];
             AddAnimations();
+
+            
         }
 
         //Stamina tick
@@ -293,6 +295,12 @@ namespace Characters.Player
         public void TakeTurn()
         {
             StartTurn();
+        }
+
+
+        void TestAdd()
+        {
+            anim.runtimeAnimatorController.
         }
     }
 }
