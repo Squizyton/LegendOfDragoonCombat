@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -37,7 +39,8 @@ namespace Characters.Player
         [Header("Animation Variables")]
         [SerializeField] private Animator anim;
         [SerializeField]private Animation animationPlayer;
-
+        [SerializeField]private AnimatorOverrideController overrideController;
+        
         [Title("Misc Variables")] [SerializeField]
         private VisualEffect defendParticles;
         [SerializeField] private Addition currentAddition;
@@ -55,9 +58,9 @@ namespace Characters.Player
             speed = character.baseSpeed;
 
             currentAddition = character.additions[0];
-            AddAnimations();
+            //AddAnimations();
+            TestNewAnimationAdding();
 
-            
         }
 
         //Stamina tick
@@ -297,6 +300,40 @@ namespace Characters.Player
             StartTurn();
         }
 
-        
+        private void TestNewAnimationAdding()
+        {
+            var clipOverrides = new AnimationClipOverrides(overrideController.overridesCount);
+            overrideController.GetOverrides(clipOverrides);
+
+            var indexString = "";
+            
+            for(var i = 0; i < currentAddition.comboList.Count; i++)
+            {
+                
+                indexString = "Attack " + (i + 1);
+                var indexOf = overrideController.animationClips.ToList()
+                    .FindIndex(x => x.name == indexString);
+
+                clipOverrides[indexString] = currentAddition.comboList[i].animation;
+                
+            }
+            overrideController.ApplyOverrides(clipOverrides);
+        }
+
+    }
+    public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
+    {
+        public AnimationClipOverrides(int capacity) : base(capacity) {}
+
+        public AnimationClip this[string name]
+        {
+            get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+            set
+            {
+                int index = this.FindIndex(x => x.Key.name.Equals(name));
+                if (index != -1)
+                    this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+            }
+        }
     }
 }
