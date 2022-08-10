@@ -145,7 +145,7 @@ namespace Characters.Player
         {
             CombatUIManager.instance.TurnOffAttackUI();
         
-            anim.enabled = false;
+         
             currentCombo = 0;
             CameraManager.instance.ZoomInOnCharacter(this);
 
@@ -183,22 +183,14 @@ namespace Characters.Player
 
             hitOnTime = true;
             HitCombo();
-            CombatManager.instance.OnNewTurn();
         }
-
-        /// Developers note: Now, normally you'd want to use unity's animator. HOWEVER, Animator does not support add Animations runtime(that I know of currently)...while Animation does.
-        /// Don't do this. It's a bad idea. Just use Unity's Animator.
-        /// 
-        ///08/02/2022:
-        /// A better solution to completely fix this is just to change the animator attached. Then have several number triggers. And then call the corresponding number.
-        /// TODO: implement this
+        
         private void HitCombo()
         {
             //If the combo is greater than the amount of animations, end the combo
             currentCombo++;
-
             //Play the current combo animation
-            animationPlayer.Play(currentAddition.comboList[currentCombo - 1].animationName);
+            anim.SetTrigger("Attack" + currentCombo);
             //Start the timer for the next combo hit
             if (currentCombo < currentAddition.comboList.Count)
                 StartCoroutine(WaitForAnimation(currentAddition.comboList[currentCombo - 1].animationSpeed));
@@ -217,7 +209,6 @@ namespace Characters.Player
        
             //End the combo chain and reset the combo
             currentCombo = 0;
-            anim.enabled = true;
         }
     
         private int CalculateDamage()
@@ -311,13 +302,16 @@ namespace Characters.Player
             {
                 
                 indexString = "Attack " + (i + 1);
-                var indexOf = overrideController.animationClips.ToList()
-                    .FindIndex(x => x.name == indexString);
-
+                
                 clipOverrides[indexString] = currentAddition.comboList[i].animation;
                 
+                Debug.Log(clipOverrides[indexString]);
             }
             overrideController.ApplyOverrides(clipOverrides);
+            
+            
+            foreach(var clipName in overrideController.animationClips)
+                Debug.Log(clipName);
         }
 
     }
