@@ -10,6 +10,8 @@ public class CameraManager : MonoBehaviour
 
    [SerializeField]private List<CinemachineVirtualCamera> cameras;
    [SerializeField] private CinemachineVirtualCamera currentCamera;
+   
+   private CinemachineVirtualCamera previousCamera;
    public CinemachineVirtualCamera battleCamera;
    
    [Header("Camera Settings")]
@@ -38,6 +40,8 @@ public CinemachineVirtualCamera GetCurrentCamera()
    //Zoom in on Character Attacking
    public void ZoomInOnCharacter(PlayerController player)
    {
+      currentCamera = battleCamera;
+      
       battleCamera.Priority = 50;
 
       battleCamera.transform.parent = player.transform;
@@ -53,6 +57,7 @@ public CinemachineVirtualCamera GetCurrentCamera()
    {
       battleCamera.Priority = 0;
       
+      currentCamera = previousCamera;
       //reset parent
       battleCamera.transform.parent = null;
    }
