@@ -143,6 +143,8 @@ namespace Characters.Player
         #region Combo System
         public void StartAttack(EnemyController enemy)
         {
+            Debug.Log("Called attack");
+            
             CombatUIManager.instance.TurnOffAttackUI();
         
          
@@ -170,8 +172,7 @@ namespace Characters.Player
             if (hitOnTime) return;
         
             Debug.Log("Not hit on time");
-            EndCombo();
-            CombatManager.instance.OnNewTurn();
+            StartCoroutine(EndComboDelay(0));
         }
 
         public void Update()
@@ -232,7 +233,7 @@ namespace Characters.Player
     
         private IEnumerator WaitForAnimation(float time)
         {
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(time / 2);
            
             CombatUIManager.instance.StartAdditionTimer(currentAddition.comboList[currentCombo].animationSpeed);
         }
@@ -315,6 +316,8 @@ namespace Characters.Player
         }
 
     }
+    
+    //For animations
     public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
     {
         public AnimationClipOverrides(int capacity) : base(capacity) {}

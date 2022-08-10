@@ -249,8 +249,6 @@ public class CombatManager : MonoBehaviour
     {
         //Get the next character
         currentActor = turns.Dequeue();
-
-
         switch (currentActor)
         {
             case PlayerController:
