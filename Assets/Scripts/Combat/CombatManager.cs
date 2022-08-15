@@ -191,6 +191,12 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+
+    public void PlayerHitAnimation()
+    {
+        ReturnCurrentCharacter().HitAnimation();
+    }
+
     #endregion
     
     #region Turn Handlers
@@ -303,6 +309,8 @@ public class CombatManager : MonoBehaviour
         enemyControllers[enemyIndex].HitAnimation();
     }
 
+    
+    
     private void SpawnEnemies()
     {
         foreach (var enemy in enemyControllers)
