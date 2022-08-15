@@ -32,13 +32,8 @@ namespace Characters.Player
         bool canIncrementCombo;
         private bool hitOnTime;
 
-        [Title("The Character's Components")] 
-    
-    
-    
-        [Header("Animation Variables")]
-        [SerializeField] private Animator anim;
-        [SerializeField]private Animation animationPlayer;
+        [Title("The Character's Components")] [Header("Animation Variables")] 
+        [SerializeField,ReadOnly] private Animator anim;
         [SerializeField]private AnimatorOverrideController overrideController;
         
         [Title("Misc Variables")] [SerializeField]
@@ -58,18 +53,14 @@ namespace Characters.Player
             speed = character.baseSpeed;
 
             currentAddition = character.additions[0];
-            //AddAnimations();
             TestNewAnimationAdding();
 
         }
 
-        //Stamina tick
-        private void AddAnimations()
+        private void Start()
         {
-            foreach (var anima in currentAddition.comboList)
-            {
-                animationPlayer.AddClip(anima.animation, anima.animationName);
-            }
+            TryGetComponent<Animator>(out var thing);
+            anim = thing;
         }
 
         public void InjectInfo(CharacterInfo ui)

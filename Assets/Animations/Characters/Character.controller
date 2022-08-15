@@ -258,28 +258,28 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 875928535729149888}
-    m_Position: {x: 470, y: 280, z: 0}
+    m_Position: {x: 470, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2016512929607351865}
     m_Position: {x: 230, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8562171100634177135}
-    m_Position: {x: 480, y: 50, z: 0}
+    m_Position: {x: 480, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 897781151309293572}
-    m_Position: {x: 800, y: 190, z: 0}
+    m_Position: {x: 760, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5974985689796136151}
-    m_Position: {x: 800, y: 110, z: 0}
+    m_Position: {x: 760, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2418955416083773080}
-    m_Position: {x: 800, y: 30, z: 0}
+    m_Position: {x: 760, y: 40, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1937714881423598359}
-    m_Position: {x: 800, y: -60, z: 0}
+    m_Position: {x: 760, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8012678517776468479}
-    m_Position: {x: 800, y: -150, z: 0}
+    m_Position: {x: 760, y: -140, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 1364831155277953818}
@@ -287,9 +287,9 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 490, y: -130, z: 0}
-  m_EntryPosition: {x: 470, y: 410, z: 0}
-  m_ExitPosition: {x: 90, y: -220, z: 0}
+  m_AnyStatePosition: {x: 500, y: -130, z: 0}
+  m_EntryPosition: {x: 490, y: 280, z: 0}
+  m_ExitPosition: {x: 210, y: 330, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 875928535729149888}
 --- !u!1101 &-4637992250505023356
@@ -502,7 +502,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dart
+  m_Name: Character
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: idle
