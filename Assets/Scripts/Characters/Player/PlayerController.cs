@@ -257,8 +257,7 @@ namespace Characters.Player
     
         public void GetHit(int damageTaken)
         {
-            anim.SetTrigger("hit");
-            
+
             if (isDefending)
             {
                 damageTaken /= 2;
@@ -278,6 +277,11 @@ namespace Characters.Player
             onHealthChanged?.Invoke();
         }
     
+        public void HitAnimation()
+        {
+            anim.SetTrigger("hit");
+        }
+        
         public void TakeTurn()
         {
             StartTurn();
