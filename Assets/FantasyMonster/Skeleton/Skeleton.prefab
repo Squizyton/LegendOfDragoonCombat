@@ -1274,6 +1274,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2169710724359742022}
   - component: {fileID: 2169710724350709224}
+  - component: {fileID: 8645974702078878465}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Untagged
@@ -1319,6 +1320,33 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8645974702078878465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169710724360109670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41df43c9eaa7ec4e87d406a5ca68c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useForCombat: 1
+  hitEnemy: 0
+  hitPlayer: 1
+  TriggerA:
+    m_PersistentCalls:
+      m_Calls: []
+  TriggerB:
+    m_PersistentCalls:
+      m_Calls: []
+  TriggerC:
+    m_PersistentCalls:
+      m_Calls: []
+  TriggerD:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2169710724360109672
 GameObject:
   m_ObjectHideFlags: 0
